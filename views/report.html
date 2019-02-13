@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8"/>
+<title>SL BRASIL - DELFOR/EDI</title>
+<link rel="stylesheet" href="/res/css/style.css" />
+</head>
+<body>
+<div id="header">
+	<img id="logo-topo" src="/res/images/logo.jpg"/>
+</div>
+<div id="content">
+	<div id="title">
+		<hgroup>
+		<h1>PROGRAMAÇÃO DE PEÇA/MATERIAL - ANALÍTICO</h1>
+		<h3>GMB - GENERAL MOTORS DO BRASIL S/A</h3>
+		</hgroup>
+	</div>
+	<div id="delfor-data">
+		<table id="tb-delfor-data">
+			<caption>INFORMAÇÕES DA PROGRAMAÇÃO</caption>
+			
+		</table>
+			{loop="$tag.LIN"}
+			{$value1->startFormat()}
+		<table id="tb-delfor-item">
+			<caption id="caption-item">Código do Item: </caption>
+			<caption id="caption-item-number">{$value1->getPartNumber()}</caption>
+			<caption id="caption-crono">CRONOGRAMA</caption>
+			<thead>
+			<tr>
+				<td>TIPO DE</td>
+				<td>FREQUÊNCIA</td>
+				<td>DATA-HORA</td>
+				<td>QUANTIDADE</td>
+				<td>QTDE ACUMULADA</td>			
+			</tr>
+			</thead>
+			<tbody>
+			{loop="$value1->getLineItemValues().TYPE"}
+			<tr>
+			
+				<td>{$value1->getLineItemValues().TYPE.$counter2}</td>
+				
+				<td>{$value1->getLineItemValues().FREQUENCY.$counter2}</td>
+				
+				<td>{$value1->getLineItemValues().DATE_TIME.$counter2}</td>
+	
+				<td>{$value1->getLineItemValues().QUANTITY.$counter2}</td>
+				
+				<td>{$value1->getLineItemValues().ACCUMULATED.$counter2}</td>
+				
+			</tr>
+			{/loop}
+			</tbody>
+		</table>
+			{/loop}
+	</div>
+</div>
+
+</body>
+</html>

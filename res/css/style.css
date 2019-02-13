@@ -1,0 +1,151 @@
+@charset "UTF-8";
+
+body {
+	width: 800px;
+	margin: 0px auto;
+	margin-top: 10px;
+	padding: 10px;
+	box-shadow: 0px 0px 10px black;
+	font-family: 'Times New Roman', sans-serif;
+}
+
+body#index {
+	height: 600px;
+}
+
+img#logo-topo {
+	display: block;
+	margin: 0px auto;
+}
+
+#content #title hgroup h1 {
+	text-align: center;
+	font-size: 16pt;
+}
+
+#content #title hgroup h3 {
+	text-align: center;
+	font-size: 12pt;	
+}
+
+#tb-delfor-data, #tb-delfor-item {
+	margin: 0px auto;
+	padding: 10px;
+}
+#tb-delfor-item {
+	margin-top: 100px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-spacing: 0px;
+}
+
+#tb-delfor-item:border-bottom {
+	margin-top: 100px;
+}
+
+#tb-delfor-item tbody td {
+	padding: 10px;
+	text-align: center;
+	background-color: #cecece;
+	border-bottom: 1px solid white;
+}
+
+#tb-delfor-item thead td {
+	padding: 10px;
+	text-align: center;
+	background-color: #888888;
+	color: white;
+	border-bottom: 1px solid white;
+}
+
+#caption-item {
+	color: white;
+	padding: 3px;
+	background-color: #888888;
+}
+
+#caption-item-number {
+	font-size: 14pt;
+	background-color: #dddddd;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-top: 5px;
+	margin-bottom: 30px;	
+}
+
+#welcome h1 {
+	font-size: 16pt;
+	text-align: center;
+	color: rgb(18, 18, 88);
+}	
+
+form#form-file {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -250px;
+  width: 500px;
+  height: 200px;
+  border: 4px dashed #fff;
+  cursor: pointer;
+}
+
+form#form-file p {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 170px;
+  font-family: Arial;
+  border: 1px dashed black;
+  cursor: pointer;
+}
+
+form#form-file input{
+  position: absolute;
+  top: 20px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+form#form-file button{
+  margin: 0;
+  color: #808080;
+  background: #c0c0c0;
+  border: none;
+  width: 508px;
+  height: 35px;
+  margin-top: -20px;
+  margin-left: -4px;
+  border-radius: 4px;
+  transition: all .2s ease;
+  outline: none;
+  cursor: no-drop;
+  border-radius: 15px;
+  box-shadow: 0 4px #999;
+}
+
+form#form-file button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
