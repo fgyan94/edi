@@ -34,7 +34,24 @@ function setFileName(fileExists = false) {
 	if(fileExists == true)
 		name = input.files[0].name;
 	
-	document.getElementById('filename').innerHTML = name;
+	document.getElementById('file-label').innerHTML = name;
+}
+
+function dragOver() {
+	var drag = document.getElementById('file-label');
+	var form = document.getElementById('form-file');
+	
+	drag.style.color='#8ccaff';
+	form.style.border='4px dashed #8ccaff';
+	
+}
+
+function dragLeave() {
+	var drag = document.getElementById('file-label');
+	var form = document.getElementById('form-file');
+	
+	drag.style.color='#121258';
+	form.style.border='4px dashed #121258';
 }
 
 

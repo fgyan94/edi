@@ -2,7 +2,7 @@
 
 namespace edi;
 
-use Rain\Tpl;
+use \Rain\Tpl;
 
 class Page {
     private $tpl;
