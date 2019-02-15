@@ -132,8 +132,42 @@ form#form-file button:active {
 	box-shadow: 0 2px #777;
 	transform: translateY(2px);
 }
-	
-	
+
+#menu-topo a {
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+	text-decoration: none;
+	color: #121258;
+	font-size: 12pt;
+	text-shadow: 0 1px 0 #ccc;
+	margin-left: 10px;
+	margin: 5px;
+	border: 1px solid #121258;
+	width: 150px;
+	outline: none;
+}
+
+#menu-topo a img {
+	width: 28px;
+	height: 28px;
+	background-color: #121258;
+}
+
+#menu-topo a span{
+	margin-right: 5px;
+	padding: 5px;
+}
+
+#menu-topo a:hover {
+	border: 1px solid #20b2aa;
+	color: #20b2aa;
+}
+
+#menu-topo a:hover img {
+	background-color: #20b2aa;	
+}
+
 	
 	
 	
