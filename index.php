@@ -9,6 +9,7 @@ require_once ("vendor/autoload.php");
 use \Slim\Slim;
 use edi\Page;
 use edi\DELFOR;
+use edi\EXCEL;
 
 $app = new Slim;
 
@@ -31,7 +32,7 @@ $app->post('/report', function() {
     $file = $_FILES['file'];
     $tmpFile = $file['tmp_name'];
     $filename = $file['name'];
-    $destination = $_SERVER['DOCUMENT_ROOT'] . "/upfiles/" . $filename;
+    $destination = $_SERVER['DOCUMENT_ROOT'] . "/upfiles/delfor" . $filename;
     
     move_uploaded_file($tmpFile, $destination);
     
@@ -43,8 +44,19 @@ $app->post('/report', function() {
     
     $page = new Page();
     $page->setTPL('report', array(
-            "tag" => $delfor->get()));
+            "tag" => $delfor->get(),
+            "filename"=>$filename
+           )
+    );
+    
 });
+
+
+$app->get('/export/:filename', function($filename) {
+    $excel = new EXCEL();
+    $excel->export($filename);
+});
+
 
 $app->run();
 

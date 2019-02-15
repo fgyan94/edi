@@ -5,13 +5,12 @@ body {
 	width: 800px;
 	box-shadow: 0 0 10px #121258;
 	margin: 0px auto;
-	margin-top: 10px;
 	padding: 10px;
 	font-family: 'Times New Roman', sans-serif;
 }
 
 body#index {
-	height: 600px;
+	height: 637px;
 }
 
 img#logo-topo {
@@ -84,7 +83,7 @@ img#logo-topo {
 form#form-file {
 	display: block;
 	margin: 0px auto;
-	margin-top: 100px;
+	margin-top: 150px;
 	width: 500px;
 	height: 200px;
 	cursor: pointer;
@@ -127,10 +126,16 @@ form#form-file button#generate {
 	top: 200px;
 }
 
-form#form-file button:active {
+form#form-file button#generate:active {
 	background-color: #3e8e41;
 	box-shadow: 0 2px #777;
 	transform: translateY(2px);
+}
+
+#menu-topo {
+	position: absolute;
+	top: 0px;
+	left: 270px;
 }
 
 #menu-topo a {
@@ -168,6 +173,10 @@ form#form-file button:active {
 	background-color: #20b2aa;	
 }
 
+
+#title {
+	margin-top: 25px;
+}
 	
 	
 	

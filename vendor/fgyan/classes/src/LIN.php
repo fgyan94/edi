@@ -44,12 +44,26 @@ class LIN extends SEGMENT {
     }
     
     public function startFormat() {
+        $this->setGenerationDate();
+//         $this->setMessageCode();
+//         $this->setMessageFunction();
+//         $this->setIniHorizonte();
+//         $this->setFimHorizonte();
+//         $this->setCurrentProgram();
+//         $this->setEmitente();
+//         $this->setProcessingIndicator();
+        
+        
         $this->setPartNumber();
         $this->setType();
         $this->setFrequency();
         $this->setDateTime();
         $this->setQuantity();
         $this->setAccumulated();
+    }
+    
+    private function setGenerationDate() {
+        
     }
     
     private function setPartNumber() {

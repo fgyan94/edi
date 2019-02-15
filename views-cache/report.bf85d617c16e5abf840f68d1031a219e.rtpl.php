@@ -7,6 +7,17 @@
 </head>
 <body>
 <div id="header">
+	<div id="menu-topo">
+		<a href="/">
+			<img alt="Home" src="/res/images/home.png">
+			<span>home</span>
+		</a>
+		
+		<a href="/export/<?php echo htmlspecialchars( $filename, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+			<img alt="Export to Excel" src="/res/images/export-excel.png">
+			<span>export to excel</span>
+		</a>
+	</div>
 	<img id="logo-topo" src="/res/images/logo.jpg"/>
 </div>
 <div id="content">
