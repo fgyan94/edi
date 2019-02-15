@@ -160,6 +160,10 @@ class LIN extends SEGMENT {
     public function getLineItemValues() {
         return $this->_ITEM_VALUES;
     }
+    
+    public function getCount() {
+    	return count($this->_ITEM_VALUES['QUANTITY']);
+    }
 }
 
 ?>

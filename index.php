@@ -32,7 +32,7 @@ $app->post('/report', function() {
     $file = $_FILES['file'];
     $tmpFile = $file['tmp_name'];
     $filename = $file['name'];
-    $destination = $_SERVER['DOCUMENT_ROOT'] . "/upfiles/delfor" . $filename;
+    $destination = $_SERVER['DOCUMENT_ROOT'] . "/upfiles/delfor/" . $filename;
     
     move_uploaded_file($tmpFile, $destination);
     
@@ -45,8 +45,9 @@ $app->post('/report', function() {
     $page = new Page();
     $page->setTPL('report', array(
             "tag" => $delfor->get(),
-            "filename"=>$filename
+            "filename"=>base64_encode($filename)
            )
+    		
     );
     
 });
