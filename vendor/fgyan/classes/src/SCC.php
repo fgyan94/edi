@@ -23,8 +23,8 @@ class SCC extends SEGMENT {
         $this->setData($data);
     }
     
-    public function start($index, $line, $className, $classIgnore, $hasStart = true) {
-        parent::start($index, $line, 'QTY', 'SCC');
+    public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
+    	parent::start($index, $line, 'QTY', $classIgnore);
     }
 }
 

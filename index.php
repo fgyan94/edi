@@ -5,7 +5,7 @@
 session_start();
 
 require_once ("vendor/autoload.php");
-// use edi\Page;
+
 use \Slim\Slim;
 use edi\Page;
 use edi\DELFOR;
@@ -42,16 +42,17 @@ $app->post('/report', function() {
     
     $delfor->startExplode();
     
+//     var_dump($delfor->get());
+    exit;
+    
     $page = new Page();
     $page->setTPL('report', array(
-            "tag" => $delfor->get(),
+            "tag" => $delfor->getMessage(),
             "filename"=>base64_encode($filename)
-           )
-    		
+           )	
     );
     
 });
-
 
 $app->get('/export/:filename', function($filename) {
     $excel = new EXCEL();

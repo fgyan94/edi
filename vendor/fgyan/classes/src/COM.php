@@ -1,22 +1,17 @@
 <?php
+
 namespace edi;
 
-class PIA extends SEGMENT{
-    
+class COM extends SEGMENT {
 	
 	public function __construct() {
 		$data = array(
 			"ID" => array(
 				"ID"
 			),
-			"ID_QUALIFIER" => array(
-				"QUALIFIER"
-			),
-			"ITEM_NUMBER" => array(
+			"COMM_CONTACT" => array(
 				"NUMBER",
-				"TYPE",
-				"QUALIFIER",
-				"AGENCY"
+				"CHANNEL_QUALIFIER"
 			)
 		);
 		
@@ -24,4 +19,3 @@ class PIA extends SEGMENT{
 	}
 }
 
-?>

@@ -4,7 +4,6 @@ namespace edi;
 abstract class SEGMENT {
     private $_DATA = array(array());
     private $_SUB_SEG = array();
-    
     private $_INDEX = 0;
     
     public function dismember($line){
@@ -20,13 +19,17 @@ abstract class SEGMENT {
         reset($this->_DATA);
         for($i = 0; $i < count($values); $i++) {
             $key = key($this->_DATA);
-            $this->_DATA[$key] = array_combine($this->_DATA[$key], $values[$i]);
+            
+            $count = min(count($this->_DATA[$key]), count($values[$i]));
+            $this->_DATA[$key] = array_combine(array_slice($this->_DATA[$key], 0, $count), array_slice($values[$i], 0, $count));
+            
+//             $this->_DATA[$key] = array_combine($this->_DATA[$key], $values[$i]);
 
             next($this->_DATA);
         }
     }
     
-    public function start($index, $line, $className, $classIgnore, $hasStart = true){
+    public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0){
         $this->_INDEX = $index+1;
         do {
             if($this->_INDEX >= count($line))
@@ -41,13 +44,14 @@ abstract class SEGMENT {
                 $_SEG->dismember($line[$this->_INDEX]);
                 
                 if($hasStart) 
-                    $_SEG->start($this->_INDEX, $line, $className, $classIgnore, $hasStart);
+                    $_SEG->start($this->_INDEX, $line, $className, $classIgnore, $hasStart, $seg_number);
                 
                 $this->add($_SEG);
             }
             
             $this->_INDEX+=1;
-        } while($subs != $classIgnore);
+        } while(!in_array($subs, $classIgnore));
+    	
     }
     
     public function setData($data = array()) {

@@ -2,8 +2,6 @@
 namespace edi;
 
 class LIN extends SEGMENT {
-    private $_PIA;
-    private $_PAC;
     
     private $_ITEM_VALUES = array(
         "PART_NUMBER" => "",
@@ -38,9 +36,79 @@ class LIN extends SEGMENT {
         $this->PIA = $_PIA;
     }
     
-    public function start($index, $line, $className, $classIgnore, $hasStart = true) {
-        parent::start($index, $line, 'QTY', 'SCC');
-        parent::start($index, $line, 'SCC', 'PAC');
+    public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
+    	array_unshift($classIgnore, 'NAD');
+    	array_unshift($classIgnore, 'PAC');
+    	array_unshift($classIgnore, 'SCC');
+    	array_unshift($classIgnore, 'QTY');
+    	array_unshift($classIgnore, 'TDT');
+    	array_unshift($classIgnore, 'RFF');
+    	array_unshift($classIgnore, 'FTX');
+    	array_unshift($classIgnore, 'DTM');
+    	array_unshift($classIgnore, 'LOC');
+    	array_unshift($classIgnore, 'GIR');
+    	array_unshift($classIgnore, 'GIN');
+    	array_unshift($classIgnore, 'ALI');
+    	array_unshift($classIgnore, 'MEA');
+    	array_unshift($classIgnore, 'IMD');
+    	
+    	parent::start($index, $line, 'PIA', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'IMD', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'MEA', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'ALI', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'GIN', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'GIR', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'LOC', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'DMT', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'FTX', $classIgnore, false);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'RFF', $classIgnore);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'TDT', $classIgnore);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'QTY', $classIgnore);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'SCC', $classIgnore);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'PAC', $classIgnore);
+    	
+    	array_shift($classIgnore);
+    	parent::start($index, $line, 'NAD', $classIgnore, true, 'SEG22');
+    	
+    	
+//     	if($_SEG instanceof UNB) {
+//     		setEMITENTE($_SEG->getValues());
+//     	} else if($_SEG instanceof UNH) {
+//     		$this->setFUNCTION_MSG($_SEG->getValues());
+//     	} else if($_SEG instanceof DTM) {
+//     		$this->setDocDates($_SEG);
+//     	} else if($_SEG instanceof GIS) {
+//     		$this->setPROCESS_INDIC($_SEG->getValues());
+//     	} else if($_SEG instanceof LIN) {
+//     		$this->pushLIN($_SEG);
+//     	}
+    	
     }
     
     public function startFormat() {
