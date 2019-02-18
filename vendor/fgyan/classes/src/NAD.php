@@ -43,68 +43,77 @@ class NAD extends SEGMENT {
 		parent::setData($data);
 	}
 	
-	public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
-		if($seg_number == 'SEG02') {
-			array_unshift($classIgnore, "CTA");			
-			parent::start($index, $line, 'RFF', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'CTA', $classIgnore);
-			
-		} else if($seg_number == 'SEG07') {
-			array_unshift($classIgnore, 'TDT');
-			array_unshift($classIgnore, 'CTA');
-			array_unshift($classIgnore, 'DOC');
-			array_unshift($classIgnore, 'RFF');
-			array_unshift($classIgnore, 'FTX');
-			
-			parent::start($index, $line, 'LOC', $classIgnore, false);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'FTX', $classIgnore, false);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'RFF', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'DOC', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'CTA', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'TDT', $classIgnore);
-			
-		} else if($seg_number == 'SEG22') {
-			array_unshift($classIgnore, 'TDT');
-			array_unshift($classIgnore, 'SCC');
-			array_unshift($classIgnore, 'QTY');
-			array_unshift($classIgnore, 'CTA');
-			array_unshift($classIgnore, 'DOC');
-			array_unshift($classIgnore, 'FTX');
-			
-			parent::start($index, $line, 'LOC', $classIgnore, false);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'FTX', $classIgnore, false);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'DOC', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'CTA', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'QTY', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'SCC', $classIgnore);
-			
-			array_shift($classIgnore);
-			parent::start($index, $line, 'TDT', $classIgnore);
-			
-		}
-		
+	public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(),
+	    $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+	    
+        if($_STRATEGY === EDI::_DELJIT_STRATEGY_) {
+ 
+            array_unshift($_CLASS_IGNORE, "CTA");
+            parent::start($_INDEX, $_LINE, 'RFF', $_CLASS_IGNORE);
+            
+        } else {
+            
+            if($_SEG_NUMBER == 'SEG02') {
+    			array_unshift($_CLASS_IGNORE, "CTA");			
+    			parent::start($_INDEX, $_LINE, 'LOC', $_CLASS_IGNORE, false);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'CTA', $_CLASS_IGNORE);
+    			
+    		} else if($_SEG_NUMBER == 'SEG07') {
+    			array_unshift($_CLASS_IGNORE, 'TDT');
+    			array_unshift($_CLASS_IGNORE, 'CTA');
+    			array_unshift($_CLASS_IGNORE, 'DOC');
+    			array_unshift($_CLASS_IGNORE, 'RFF');
+    			array_unshift($_CLASS_IGNORE, 'FTX');
+    			
+    			parent::start($_INDEX, $_LINE, 'LOC', $_CLASS_IGNORE, false);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'RFF', $_CLASS_IGNORE);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'DOC', $_CLASS_IGNORE);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'CTA', $_CLASS_IGNORE);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'TDT', $_CLASS_IGNORE);
+    			
+    		} else if($_SEG_NUMBER == 'SEG22') {
+    			array_unshift($_CLASS_IGNORE, 'TDT');
+    			array_unshift($_CLASS_IGNORE, 'SCC');
+    			array_unshift($_CLASS_IGNORE, 'QTY');
+    			array_unshift($_CLASS_IGNORE, 'CTA');
+    			array_unshift($_CLASS_IGNORE, 'DOC');
+    			array_unshift($_CLASS_IGNORE, 'FTX');
+    			
+    			parent::start($_INDEX, $_LINE, 'LOC', $_CLASS_IGNORE, false);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'DOC', $_CLASS_IGNORE);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'CTA', $_CLASS_IGNORE);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'QTY', $_CLASS_IGNORE);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'SCC', $_CLASS_IGNORE);
+    			
+    			array_shift($_CLASS_IGNORE);
+    			parent::start($_INDEX, $_LINE, 'TDT', $_CLASS_IGNORE);
+    			
+    		}
+        }
 	}
 }
 

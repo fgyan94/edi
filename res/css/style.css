@@ -11,6 +11,15 @@ body {
 
 body#index {
 	height: 100px;
+	box-shadow: 0 0 0px #121258;
+}
+
+#div-file {
+	display: block;
+	padding: 5px;
+	padding-top: 1px;
+	padding-bottom:150px;
+	box-shadow: 0 0 10px #121258;
 }
 
 img#logo-topo {
@@ -33,7 +42,28 @@ img#logo-topo {
 	padding: 10px;
 }
 
-#tb-delfor-item {
+#tb-delfor-data caption {
+	padding: 5px;
+	text-align: center;
+	background-color: #888888;
+	color: white;
+	border-bottom: 1px solid white;
+}
+
+#tb-delfor-data td.header{
+	font-weight: bold;
+}
+
+#tb-delfor-data td {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #cecece;
+	border-bottom:  1px solid white;
+}
+
+#tb-delfor-data, #tb-delfor-item {
 	margin-top: 100px;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
@@ -136,7 +166,7 @@ form#form-file button#generate:active {
 #menu-topo {
 	position: absolute;
 	top: 0px;
-	left: 22%;
+	left: 20%;
 }
 
 #menu-topo a {

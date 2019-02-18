@@ -24,9 +24,11 @@ class EXCEL {
             $this->_DELFOR = new DELFOR($filename);
             $this->_DELFOR->startExplode();
             
-            $this->_TAGS = $this->_DELFOR->get()['LIN'];
+            $this->_TAGS = $this->_DELFOR->getLIN();
             
             $this->_EXCEL->setActiveSheetIndex(0);
+            
+            $this->loadInfo();
             
             $this->setNumSheets();
             
@@ -76,7 +78,13 @@ class EXCEL {
             	}
             }
             
-          $this->_EXCEL->setActiveSheetIndex(0);  
+            $this->_EXCEL->setActiveSheetIndex(0);
+            $this->_EXCEL->getProperties()->setCreator('Yan Gonçalves')
+            ->setLastModifiedBy('Yan Gonçalves')
+            ->setTitle('RESUMO EDI - SL BRASIL')
+            ->setSubject('DELFOR')
+            ->setDescription('DOCUMENTO DELFOR - GM')
+            ->setCategory('DELFOR FILE');
           
           header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
           header('Content-Disposition: attachment;filename="Resumo EDI.xlsx"');
@@ -96,6 +104,20 @@ class EXCEL {
     	->setCellValue("$rangeStart$this->_ROW", $array[$index])
     	->getStyle("$rangeStart$this->_ROW")
     	->applyFromArray($style);
+    }
+    
+    private function loadInfo() {
+        $_SHEET = $this->_EXCEL->getActiveSheet();
+        $_DELFOR = $this->_DELFOR;
+        
+        $_SHEET->setCellValue('E7', $_DELFOR->getGenerateDate());
+        $_SHEET->setCellValue('E8', $_DELFOR->getDocID());
+        $_SHEET->setCellValue('E9', $_DELFOR->getMsgFunc());
+        $_SHEET->setCellValue('E10', $_DELFOR->getIniHoriz());
+        $_SHEET->setCellValue('E11', $_DELFOR->getGenerateDate());
+        $_SHEET->setCellValue('L8', $_DELFOR->getEmitente());
+        $_SHEET->setCellValue('L9', (int)$_DELFOR->getProcessIndic());
+        $_SHEET->setCellValue('L10', $_DELFOR->getEndHoriz());
     }
     
     private function setNumSheets() {    	

@@ -18,12 +18,19 @@ class QTY extends SEGMENT {
         $this->setData($data);
     }
     
-    public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
-    	array_unshift($classIgnore, "RFF");
-    	parent::start($index, $line, 'DTM', $classIgnore, false);
+    public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(),
+        $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+        
+        if($_STRATEGY === EDI::_DELJIT_STRATEGY_) {
+            array_unshift($_CLASS_IGNORE, "DTM");
+            parent::start($_INDEX, $_LINE, 'SCC', $_CLASS_IGNORE, false);
+        }
+        
+    	array_unshift($_CLASS_IGNORE, "RFF");
+    	parent::start($_INDEX, $_LINE, 'DTM', $_CLASS_IGNORE, false);
     	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'RFF', $classIgnore);
+    	array_shift($_CLASS_IGNORE);
+    	parent::start($_INDEX, $_LINE, 'RFF', $_CLASS_IGNORE);
     }
 }
 ?>

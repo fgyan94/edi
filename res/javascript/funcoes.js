@@ -53,15 +53,3 @@ function dragLeave() {
 	drag.style.color='#121258';
 	form.style.border='4px dashed #121258';
 }
-
-
-//function hoverButton() {
-//	var button = document.getElementById('generate');
-//	
-//	if(button.disabled == false) {
-//		button.style.background='#b0c4de';
-//		button.style.color='#121258';
-//		button.style.cursor='pointer';
-//		button.style.borderBottom='4px solid #121258';
-//	}
-//}

@@ -36,102 +36,116 @@ class LIN extends SEGMENT {
         $this->PIA = $_PIA;
     }
     
-    public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
-    	array_unshift($classIgnore, 'NAD');
-    	array_unshift($classIgnore, 'PAC');
-    	array_unshift($classIgnore, 'SCC');
-    	array_unshift($classIgnore, 'QTY');
-    	array_unshift($classIgnore, 'TDT');
-    	array_unshift($classIgnore, 'RFF');
-    	array_unshift($classIgnore, 'FTX');
-    	array_unshift($classIgnore, 'DTM');
-    	array_unshift($classIgnore, 'LOC');
-    	array_unshift($classIgnore, 'GIR');
-    	array_unshift($classIgnore, 'GIN');
-    	array_unshift($classIgnore, 'ALI');
-    	array_unshift($classIgnore, 'MEA');
-    	array_unshift($classIgnore, 'IMD');
+    public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(),
+        $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+        
+        if($_STRATEGY === EDI::_DELJIT_STRATEGY_) {
+            array_unshift($_CLASS_IGNORE, 'QTY');
+            array_unshift($_CLASS_IGNORE, 'LOC');
+            array_unshift($_CLASS_IGNORE, 'RFF');
+            array_unshift($_CLASS_IGNORE, 'PAC');
+            array_unshift($_CLASS_IGNORE, 'FTX');
+            array_unshift($_CLASS_IGNORE, 'GIR');
+            array_unshift($_CLASS_IGNORE, 'ALI');
+            array_unshift($_CLASS_IGNORE, 'IMD');
+            
+            parent::start($_INDEX, $_LINE, 'PIA', $_CLASS_IGNORE, false);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'IMD', $_CLASS_IGNORE, false);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'ALI', $_CLASS_IGNORE, false);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'GIR', $_CLASS_IGNORE, false);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'PAC', $_CLASS_IGNORE, false);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'RFF', $_CLASS_IGNORE);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'LOC', $_CLASS_IGNORE, false);
+            
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'QTY', $_CLASS_IGNORE, true, 0, EDI::_DELJIT_STRATEGY_);
+            
+        } else {
+        
+            array_unshift($_CLASS_IGNORE, 'NAD');
+            array_unshift($_CLASS_IGNORE, 'PAC');
+            array_unshift($_CLASS_IGNORE, 'SCC');
+            array_unshift($_CLASS_IGNORE, 'QTY');
+            array_unshift($_CLASS_IGNORE, 'TDT');
+            array_unshift($_CLASS_IGNORE, 'RFF');
+            array_unshift($_CLASS_IGNORE, 'FTX');
+            array_unshift($_CLASS_IGNORE, 'DTM');
+            array_unshift($_CLASS_IGNORE, 'LOC');
+            array_unshift($_CLASS_IGNORE, 'GIR');
+            array_unshift($_CLASS_IGNORE, 'GIN');
+            array_unshift($_CLASS_IGNORE, 'ALI');
+            array_unshift($_CLASS_IGNORE, 'MEA');
+            array_unshift($_CLASS_IGNORE, 'IMD');
     	
-    	parent::start($index, $line, 'PIA', $classIgnore, false);
+            parent::start($_INDEX, $_LINE, 'PIA', $_CLASS_IGNORE, false);
     	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'IMD', $classIgnore, false);
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'IMD', $_CLASS_IGNORE, false);
     	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'MEA', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'ALI', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'GIN', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'GIR', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'LOC', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'DMT', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'FTX', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'RFF', $classIgnore);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'TDT', $classIgnore);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'QTY', $classIgnore);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'SCC', $classIgnore);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'PAC', $classIgnore);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'NAD', $classIgnore, true, 'SEG22');
-    	
-    	
-//     	if($_SEG instanceof UNB) {
-//     		setEMITENTE($_SEG->getValues());
-//     	} else if($_SEG instanceof UNH) {
-//     		$this->setFUNCTION_MSG($_SEG->getValues());
-//     	} else if($_SEG instanceof DTM) {
-//     		$this->setDocDates($_SEG);
-//     	} else if($_SEG instanceof GIS) {
-//     		$this->setPROCESS_INDIC($_SEG->getValues());
-//     	} else if($_SEG instanceof LIN) {
-//     		$this->pushLIN($_SEG);
-//     	}
+            array_shift($_CLASS_IGNORE);
+            parent::start($_INDEX, $_LINE, 'MEA', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'ALI', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'GIN', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'GIR', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'LOC', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'DMT', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'RFF', $_CLASS_IGNORE);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'TDT', $_CLASS_IGNORE);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'QTY', $_CLASS_IGNORE);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'SCC', $_CLASS_IGNORE);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'PAC', $_CLASS_IGNORE);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'NAD', $_CLASS_IGNORE, true, 'SEG22');
+        }
     	
     }
     
-    public function startFormat() {
-        $this->setGenerationDate();
-//         $this->setMessageCode();
-//         $this->setMessageFunction();
-//         $this->setIniHorizonte();
-//         $this->setFimHorizonte();
-//         $this->setCurrentProgram();
-//         $this->setEmitente();
-//         $this->setProcessingIndicator();
-        
-        
+    public function startFormat() {        
         $this->setPartNumber();
         $this->setType();
         $this->setFrequency();
         $this->setDateTime();
         $this->setQuantity();
         $this->setAccumulated();
-    }
-    
-    private function setGenerationDate() {
-        
     }
     
     private function setPartNumber() {

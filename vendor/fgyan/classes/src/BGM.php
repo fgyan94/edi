@@ -15,7 +15,12 @@ class BGM extends SEGMENT {
 				"RESP_AGENCY",
 				"NAME"
 			),
-			"DOCUMENT_MESSAGE_CODED" => array(
+		    "DOCUMENT_MESSAGE_ID" => array(
+		        "NUMBER",
+		        "VERSION",
+		        "REVISION"
+		    ),
+			"MESSAGE_FUNCTION" => array(
 				"CODE"
 			),
 			"RESP_TYPE" => array(

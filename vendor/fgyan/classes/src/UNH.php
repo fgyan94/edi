@@ -31,29 +31,54 @@ class UNH extends SEGMENT{
 		$this->setData($data);
 	}
 	
-	public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
+	public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(),
+	    $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+	    
+	    if($_STRATEGY === EDI::_DELJIT_STRATEGY_) {
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'BGM', $_CLASS_IGNORE, false);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'DTM', $_CLASS_IGNORE, false);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'RFF', $_CLASS_IGNORE, false);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'NAD', $_CLASS_IGNORE, true, $_SEG_NUMBER, EDI::_DELJIT_STRATEGY_);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'SEQ', $_CLASS_IGNORE);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'UNT', $_CLASS_IGNORE, false);
+	    } else {
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'BGM', $_CLASS_IGNORE, false);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'DTM', $_CLASS_IGNORE, false);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false);
+	        
+	        array_shift($_CLASS_IGNORE);
+	        parent::start($_INDEX, $_LINE, 'RFF', $_CLASS_IGNORE);
 		
-		parent::start($index, $line, 'BGM', $classIgnore, false);
+    		array_shift($_CLASS_IGNORE);
+    		parent::start($_INDEX, $_LINE, 'NAD', $_CLASS_IGNORE, true, 'SEG02');
 		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'DTM', $classIgnore, false);
-		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'FTX', $classIgnore, false);
-		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'RFF', $classIgnore);
-		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'NAD', $classIgnore, true, 'SEG02');
-		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'TDT', $classIgnore);
-		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'GIS', $classIgnore);
-		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'UNT', $classIgnore, false);
+		  array_shift($_CLASS_IGNORE);    
+    		parent::start($_INDEX, $_LINE, 'TDT', $_CLASS_IGNORE);
+    		
+    		array_shift($_CLASS_IGNORE);
+    		parent::start($_INDEX, $_LINE, 'GIS', $_CLASS_IGNORE);
+    		
+    		array_shift($_CLASS_IGNORE);
+    		parent::start($_INDEX, $_LINE, 'UNT', $_CLASS_IGNORE, false);
+	    }
 	}
 }

@@ -14,8 +14,10 @@ class DOC extends SEGMENT {
 		parent::setData($data);
 	}
 	
-	public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
-		parent::start($index, $line, 'DTM', $classIgnore, false);
+	public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(),
+	    $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+	    
+	        parent::start($_INDEX, $_LINE, 'DTM', $_CLASS_IGNORE, false);
 	}
 }
 

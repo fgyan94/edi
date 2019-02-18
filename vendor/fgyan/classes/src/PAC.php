@@ -37,21 +37,27 @@ class PAC extends SEGMENT {
         parent::setData($data);
     }
     
-    public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
-    	array_unshift($classIgnore, 'PCI');
-    	array_unshift($classIgnore, 'DTM');
-    	array_unshift($classIgnore, 'QTY');
-    	
-    	parent::start($index, $line, 'MEA', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'QTY', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'DTM', $classIgnore, false);
-    	
-    	array_shift($classIgnore);
-    	parent::start($index, $line, 'PCI', $classIgnore);
-    	
+    public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(),
+        $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+        
+        if($_STRATEGY === EDI::_DELJIT_STRATEGY_) {
+            parent::start($_INDEX, $_LINE, 'PCI', $_CLASS_IGNORE, false);
+        } else {
+        
+            array_unshift($_CLASS_IGNORE, 'PCI');
+        	array_unshift($_CLASS_IGNORE, 'DTM');
+        	array_unshift($_CLASS_IGNORE, 'QTY');
+        	
+        	parent::start($_INDEX, $_LINE, 'MEA', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'QTY', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'DTM', $_CLASS_IGNORE, false);
+        	
+        	array_shift($_CLASS_IGNORE);
+        	parent::start($_INDEX, $_LINE, 'PCI', $_CLASS_IGNORE);
+        }
     }
 }

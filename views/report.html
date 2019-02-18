@@ -30,9 +30,43 @@
 	<div id="delfor-data">
 		<table id="tb-delfor-data">
 			<caption>INFORMAÇÕES DA PROGRAMAÇÃO</caption>
-			
+			<tr>
+				<td class="header">Data da Geração:</td>
+				<td class="cell">{$delfor->getGenerateDate()}</td>
+				<td class="header"></td>
+				<td class="cell"></td>
+			</tr>
+			<tr>
+				<td class="header">Documento/Mensagem:</td>
+				<td class="cell">{$delfor->getDocID()}</td>
+				<td class="header">Emitente:</td>
+				<td class="cell">{$delfor->getEmitente()}</td>
+			</tr>
+			<tr>
+				<td class="header">Função da Mensagem:</td>
+				<td class="cell">{$delfor->getMsgFunc()}</td>
+				{if="$delfor->getStrategy() == 0"}
+				<td class="header">Indicador de Processamento:</td>
+				<td class="cell">{$delfor->getProcessIndic()}</td>
+				{else}
+				<td class="header">Indicador de Status:</td>
+				<td class="cell">{$delfor->getStatusIndic()}</td>
+				{/if}				
+			</tr>
+			<tr>
+				<td class="header">Início do Horizonte:</td>
+				<td class="cell">{$delfor->getIniHoriz()}</td>
+				<td class="header">Fim do Horizonte:</td>
+				<td class="cell">{$delfor->getEndHoriz()}</td>
+			</tr>
+			<tr>
+				<td class="header">Programa Atual:</td>
+				<td class="cell">{$delfor->getGenerateDate()}</td>
+				<td class="header"></td>
+				<td class="cell"></td>
+			</tr>
 		</table>
-			{loop="$tag.LIN"}
+			{loop="$delfor->getLIN()"}
 			{$value1->startFormat()}
 		<table id="tb-delfor-item">
 			<caption id="caption-item">Código do Item: </caption>

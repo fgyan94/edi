@@ -29,28 +29,29 @@ abstract class SEGMENT {
         }
     }
     
-    public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0){
-        $this->_INDEX = $index+1;
+    public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(), 
+                            $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+        $this->_INDEX = $_INDEX+1;
         do {
-            if($this->_INDEX >= count($line))
+            if($this->_INDEX >= count($_LINE))
                 return;
             
-            $value = $line[$this->_INDEX];
-            $subs = substr($value, 0, 3);
+            $_VALUE = $_LINE[$this->_INDEX];
+            $_SUBS = substr($_VALUE, 0, 3);
             
-            if($subs === $className) {
-                $_EDI = "\\edi\\$className";
+            if($_SUBS === $_CLASS_NAME) {
+                $_EDI = "\\edi\\$_CLASS_NAME";
                 $_SEG = new $_EDI();
-                $_SEG->dismember($line[$this->_INDEX]);
+                $_SEG->dismember($_LINE[$this->_INDEX]);
                 
-                if($hasStart) 
-                    $_SEG->start($this->_INDEX, $line, $className, $classIgnore, $hasStart, $seg_number);
+                if($_HAS_START) 
+                    $_SEG->start($this->_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE, $_HAS_START, $_SEG_NUMBER, $_STRATEGY);
                 
                 $this->add($_SEG);
             }
             
             $this->_INDEX+=1;
-        } while(!in_array($subs, $classIgnore));
+        } while(!in_array($_SUBS, $_CLASS_IGNORE));
     	
     }
     

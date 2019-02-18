@@ -20,12 +20,14 @@ class GIS extends SEGMENT {
 		parent::setData($data);
 	}
 	
-	public function start($index, $line, $className, $classIgnore = array(), $hasStart = true, $seg_number = 0) {
-		array_unshift($classIgnore, 'LIN');
-		parent::start($index, $line, 'NAD', $classIgnore, $hasStart, 'SEG07');
+	public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(),
+	    $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
+	    
+	    array_unshift($_CLASS_IGNORE, 'LIN');
+	    parent::start($_INDEX, $_LINE, 'NAD', $_CLASS_IGNORE, $_HAS_START, 'SEG07');
 		
-		array_shift($classIgnore);
-		parent::start($index, $line, 'LIN', $classIgnore);
+	    array_shift($_CLASS_IGNORE);
+		parent::start($_INDEX, $_LINE, 'LIN', $_CLASS_IGNORE);
 	}
 }
 

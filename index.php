@@ -10,6 +10,7 @@ use \Slim\Slim;
 use edi\Page;
 use edi\DELFOR;
 use edi\EXCEL;
+use edi\DELJIT;
 
 $app = new Slim;
 
@@ -25,10 +26,25 @@ $app->get('/report', function() {
         header('Location: /');
         exit;
     }
+});
+
+$app->get('/export', function() {
+    if(!isset($_FILES['tmp_name'])) {
+        header('Location: /');
+        exit;
+    }
     
 });
 
 $app->post('/report', function() {
+    if(pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION) !== 'txt') {
+        echo "<script>
+                    alert('Arquivo inválido! Apenas arquivos texto (.TXT) são permitidos');
+                    window.location = '/';
+            </script>";
+        exit;
+    }
+    
     $file = $_FILES['file'];
     $tmpFile = $file['tmp_name'];
     $filename = $file['name'];
@@ -40,16 +56,15 @@ $app->post('/report', function() {
     
     $delfor = new DELFOR($delforFile);
     
-    $delfor->startExplode();
+//     $delfor = new DELJIT($delforFile);
     
-//     var_dump($delfor->get());
-    exit;
+    $delfor->startExplode();
     
     $page = new Page();
     $page->setTPL('report', array(
-            "tag" => $delfor->getMessage(),
+            "delfor" => $delfor,
             "filename"=>base64_encode($filename)
-           )	
+          )	
     );
     
 });
