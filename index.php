@@ -1,6 +1,6 @@
 <?php
-// error_reporting(0);
-// ini_set(“display_errors”, 0);
+error_reporting(0);
+ini_set(“display_errors”, 0);
 
 session_start();
 
@@ -11,6 +11,7 @@ use edi\Page;
 use edi\DELFOR;
 use edi\EXCEL;
 use edi\DELJIT;
+use edi\EDI;
 
 $app = new Slim;
 
@@ -52,17 +53,15 @@ $app->post('/report', function() {
     
     move_uploaded_file($tmpFile, $destination);
     
-    $delforFile = $destination;
+    $_EDI_FILE = $destination;
     
-    $delfor = new DELFOR($delforFile);
+    $_EDI = new EDI($_EDI_FILE);
     
-//     $delfor = new DELJIT($delforFile);
-    
-    $delfor->startExplode();
+    $_EDI->startExplode();
     
     $page = new Page();
     $page->setTPL('report', array(
-            "delfor" => $delfor,
+            "delfor" => $_EDI->getInstance(),
             "filename"=>base64_encode($filename)
           )	
     );

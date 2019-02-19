@@ -6,25 +6,31 @@ use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 
 class EXCEL {
     
-	private $_DELFOR;
+	private $_EDI;
 	private $_TAGS;
     private $_EXCEL;
     private $_ROW = 20;
     
+    private $_STRATEGY;
+    
     public function __construct() {
-    	$reader = IOFactory::createReader('Xlsx');
-    	$this->_EXCEL = $reader->load($_SERVER['DOCUMENT_ROOT']."/res/templates/edi.Xlsx");
+    		
     }
     
     public function export($file) {
-        $filename = $_SERVER['DOCUMENT_ROOT'] . "/upfiles/delfor/" . base64_decode($file);
+    	$_FILENAME = $_SERVER['DOCUMENT_ROOT'] . "/upfiles/delfor/" . base64_decode($file);
         
-        if(file_exists($filename)) {
+    	if(file_exists($_FILENAME)) {
             
-            $this->_DELFOR = new DELFOR($filename);
-            $this->_DELFOR->startExplode();
+    		$_EDI = new EDI($_FILENAME);
+    		$_EDI->startExplode();
+    		
+    		$this->_EDI = $_EDI->getInstance();
             
-            $this->_TAGS = $this->_DELFOR->getLIN();
+            $reader = IOFactory::createReader('Xlsx');
+            $this->_EXCEL = $reader->load($_SERVER['DOCUMENT_ROOT']."/res/templates/".$this->_EDI->getStrategyName().".Xlsx");
+            
+            $this->_TAGS = $this->_EDI->getLIN();
             
             $this->_EXCEL->setActiveSheetIndex(0);
             
@@ -66,12 +72,18 @@ class EXCEL {
             		
             		for($j = 0; $j < $_LIN->getCount(); $j++, $this->_ROW++) {   
             			$_STYLE['alignment']['horizontal'] = Alignment::HORIZONTAL_CENTER;
-            			            			
-            			$this->setCellValue("B", "D", $_ITEMS['TYPE'], $_STYLE, $j);
-            			$this->setCellValue("E", "G", $_ITEMS['FREQUENCY'], $_STYLE, $j);
-            			$this->setCellValue("H", "J", $_ITEMS['DATE_TIME'], $_STYLE, $j);
-            			$this->setCellValue("K", "M", $_ITEMS['QUANTITY'], $_STYLE, $j);
-            			$this->setCellValue("N", "P", $_ITEMS['ACCUMULATED'], $_STYLE, $j);
+            			
+            			$_STRATEGY = $this->_EDI->getStrategy();
+            			if($_STRATEGY === EDI::_DELFOR_STRATEGY_) {
+	            			$this->setCellValue("B", "D", $_ITEMS['TYPE'], $_STYLE, $j);
+	            			$this->setCellValue("E", "G", $_ITEMS['FREQUENCY'], $_STYLE, $j);
+	            			$this->setCellValue("H", "J", $_ITEMS['DATE_TIME'], $_STYLE, $j);
+	            			$this->setCellValue("K", "M", $_ITEMS['QUANTITY'], $_STYLE, $j);
+	            			$this->setCellValue("N", "P", $_ITEMS['ACCUMULATED'], $_STYLE, $j);
+            			} else if($_STRATEGY === EDI::_DELJIT_STRATEGY_) {
+            				$this->setCellValue("F", "H", $_ITEMS['DATE_TIME'], $_STYLE, $j);
+            				$this->setCellValue("J", "L", $_ITEMS['QUANTITY'], $_STYLE, $j);            				
+            			}
             		}
             		
             		$this->_ROW = 20;
@@ -85,9 +97,10 @@ class EXCEL {
             ->setSubject('DELFOR')
             ->setDescription('DOCUMENTO DELFOR - GM')
             ->setCategory('DELFOR FILE');
-          
+           
+          $_STRATEGY_NAME = $this->_EDI->getStrategyName();
           header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-          header('Content-Disposition: attachment;filename="Resumo EDI.xlsx"');
+          header('Content-Disposition: attachment;filename="Resumo EDI - '.$_STRATEGY_NAME.'.xlsx"');
           header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
           header("Cache-Control: post-check=0, pre-check=0", false);
           header("Pragma: no-cache");
@@ -108,16 +121,21 @@ class EXCEL {
     
     private function loadInfo() {
         $_SHEET = $this->_EXCEL->getActiveSheet();
-        $_DELFOR = $this->_DELFOR;
+        $_EDI = $this->_EDI;
         
-        $_SHEET->setCellValue('E7', $_DELFOR->getGenerateDate());
-        $_SHEET->setCellValue('E8', $_DELFOR->getDocID());
-        $_SHEET->setCellValue('E9', $_DELFOR->getMsgFunc());
-        $_SHEET->setCellValue('E10', $_DELFOR->getIniHoriz());
-        $_SHEET->setCellValue('E11', $_DELFOR->getGenerateDate());
-        $_SHEET->setCellValue('L8', $_DELFOR->getEmitente());
-        $_SHEET->setCellValue('L9', (int)$_DELFOR->getProcessIndic());
-        $_SHEET->setCellValue('L10', $_DELFOR->getEndHoriz());
+        $_STRATEGY = $this->_EDI->getStrategy();
+        
+        $_SHEET->setCellValue('E7', $_EDI->getGenerateDate());
+        $_SHEET->setCellValue('E8', $_EDI->getDocID());
+        $_SHEET->setCellValue('E9', $_EDI->getMsgFunc());
+        $_SHEET->setCellValue('E10', $_EDI->getIniHoriz());
+	    $_SHEET->setCellValue('E11', $_EDI->getGenerateDate());
+	    $_SHEET->setCellValue('L8', $_EDI->getEmitente());
+	    if($_STRATEGY === EDI::_DELFOR_STRATEGY_)
+	     	$_SHEET->setCellValue('L9', (int)$_EDI->getProcessIndic());
+	     else if($_STRATEGY === EDI::_DELJIT_STRATEGY_)
+	     	$_SHEET->setCellValue('L9', (int)$_EDI->getStatusIndic());	    
+	    $_SHEET->setCellValue('L10', $_EDI->getEndHoriz());
     }
     
     private function setNumSheets() {    	

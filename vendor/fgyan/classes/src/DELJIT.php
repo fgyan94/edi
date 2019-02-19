@@ -6,6 +6,8 @@ class DELJIT extends DELFOR {
     public function __construct($_FILENAME) {
         parent::__construct($_FILENAME);
         parent::setStrategy(EDI::_DELJIT_STRATEGY_);
+        
+        $GLOBALS['STRATEGY'] = $this->getStrategy(); 
     }
     
     protected function setData() {
@@ -22,8 +24,6 @@ class DELJIT extends DELFOR {
         
         parent::setSEG($_SEG);
         
-        
-        
         $this->runArray($this->get(), 'UNH');
         $this->setID_DOC_MSG($GLOBALS['SEG']);
         
@@ -38,7 +38,16 @@ class DELJIT extends DELFOR {
     }
     
     private function setSTATUS_INDIC($_SEQ) {
-        $_VALUES = $_SEQ->getValues();
+    	$_VALUES = $_SEQ->getValues();
+    	
+    	if(!isset($_VALUES['STATUS_INDIC']['CODE'])) {
+    		echo "<script>
+					alert('O arquivo carregado é inválido ou está corrompido!');
+					window.location = '/';
+				</script>";
+    		exit;
+    	}
+    	
         $_PROCESS_INDIC = $_VALUES['STATUS_INDIC']['CODE'];
         $this->_SEG['STATUS_INDIC'] = (int)$_PROCESS_INDIC;
     }
@@ -61,6 +70,14 @@ class DELJIT extends DELFOR {
                 }
             }
         }
+    }
+    
+    public function getStrategyName() {
+    	return EDI::_DELJIT_;
+    }
+    
+    public function __destruct(){
+    	parent::__destruct();
     }
 }
 

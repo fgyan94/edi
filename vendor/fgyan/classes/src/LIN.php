@@ -185,21 +185,27 @@ class LIN extends SEGMENT {
                 if($value->getValues()['STATUS_INDIC']['NUMBER'] == 4) {
                 
                     foreach ($value->getSubSeg() as $sub_key => $sub_value) {
-                        if($sub_value instanceof QTY) {
-                            
-                            foreach ($sub_value->getSubSeg() as $sub_key_2 => $sub_value_2) {
-                                if ($sub_value_2 instanceof DTM) {
-                                    $timestamp = strtotime($sub_value_2->getValues()['DTM_PERIOD']['DATE_TIME']);
-                                    $date = date('d/m/Y', $timestamp);
-                                    
-                                    array_push($this->_ITEM_VALUES['DATE_TIME'], $date);
-                                }   
-                            }
-                        }
+                    	$this->checkDateTime($sub_value);
                     }
-                }
+                } 
+            }
+            
+            else if($GLOBALS['STRATEGY'] === EDI::_DELJIT_STRATEGY_) {
+            	$this->checkDateTime($value);
             }
         }
+    }
+    
+    private function checkDateTime($_QTY) {
+    	if($_QTY instanceof QTY) {
+    		foreach ($_QTY->getSubSeg() as $sub_key_2 => $sub_value_2) {
+    			if ($sub_value_2 instanceof DTM) {
+    				$timestamp = strtotime($sub_value_2->getValues()['DTM_PERIOD']['DATE_TIME']);
+    				$date = date('d/m/Y', $timestamp);
+    				array_push($this->_ITEM_VALUES['DATE_TIME'], $date);
+    			}
+    		}
+    	}
     }
     
     private function setQuantity() {
@@ -208,13 +214,21 @@ class LIN extends SEGMENT {
                 if($value->getValues()['STATUS_INDIC']['NUMBER'] == 4) {
                     
                     foreach ($value->getSubSeg() as $sub_key => $sub_value) {
-                        if($sub_value instanceof QTY) {
-                            array_push($this->_ITEM_VALUES['QUANTITY'], $sub_value->getValues()['QUALIFIER']['QUANTITY']);
-                        }
+                    	$this->checkQuantity($sub_value);
                     }
                 }
             }
+            else if($GLOBALS['STRATEGY'] === EDI::_DELJIT_STRATEGY_) {
+            	$this->checkQuantity($value);
+            }
         }
+    }
+    
+    private function checkQuantity($_QTY) {
+    	if($_QTY instanceof QTY) {
+    		if($_QTY->getValues()['QUALIFIER']['ID'] == 1)
+    		array_push($this->_ITEM_VALUES['QUANTITY'], $_QTY->getValues()['QUALIFIER']['QUANTITY']);
+    	}
     }
     
     private function setAccumulated() {
@@ -222,8 +236,10 @@ class LIN extends SEGMENT {
         
         foreach ($this->getSubSeg() as $key => $value) {
             if($value instanceof QTY) {
-                $_TEMP_ACCUMULATED = $value->getValues()['QUALIFIER']['QUANTITY'];
-                break;
+            	if($value->getValues()['QUALIFIER']['ID'] == 79) {
+	                $_TEMP_ACCUMULATED = $value->getValues()['QUALIFIER']['QUANTITY'];
+	                break;
+            	}
             }
         }
         

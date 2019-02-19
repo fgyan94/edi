@@ -19,6 +19,8 @@ class DELFOR {
     public function __construct($_FILENAME) {
         $this->_FILE_1 = fopen($_FILENAME, 'r');
         $this->_FILE_2 = fopen($_FILENAME, 'r');
+        
+        $GLOBALS['STRATEGY'] = $this->getStrategy();
     }
     
     public function startExplode() {
@@ -34,8 +36,6 @@ class DELFOR {
         for($i = 0; !feof($this->_FILE_2); $i++) {
             $this->_LINES_2[$i] = fgets($this->_FILE_2);
         }
-        
-        
     }
     
     private function compareLines() {
@@ -174,9 +174,17 @@ class DELFOR {
     }
     
     protected function setPROCESS_INDIC($_GIS) {
-        $_VALUES = $_GIS->getValues();
+    	$_VALUES = $_GIS->getValues();
+    	if(!isset($_VALUES['PROCESS_IDENT']['ID'])) {
+    		echo "<script>
+					alert('O arquivo carregado é inválido ou está corrompido!');
+					window.location = '/';
+				</script>";
+    		exit;
+    	}
+    	
         $_PROCESS_INDIC = $_VALUES['PROCESS_IDENT']['ID'];
-        $this->_SEG['PROCESS_INDIC'] = $_PROCESS_INDIC;
+        $this->_SEG['PROCESS_INDIC'] = (int) $_PROCESS_INDIC;
         
         for($i = 0; $i < count($_GIS->getSubSeg()); $i++) {
             $_LIN = $_GIS->getSubSeg()[$i];
@@ -184,6 +192,7 @@ class DELFOR {
                 $this->pushLIN($_LIN);
             }
         }
+    	
     }
     
     protected function pushLIN($_LIN) {
@@ -247,23 +256,27 @@ class DELFOR {
     	return $this->_SEG['LIN'];
     }
     
-    public function __destruct() {
-        fclose($this->_FILE_1);
-        fclose($this->_FILE_2);
-        
-        unset($this->_LINES_1);
-        unset($this->_LINES_2);
-        unset($this->_FINAL_LINES);
-        unset($this->_COLUMN);
-        unset($this->file);
-    }
-    
     protected function setStrategy($_STRATEGY = EDI::_DELFOR_STRATEGY_) {
         $this->_STRATEGY = $_STRATEGY;
     }
     
     public function getStrategy() {
         return $this->_STRATEGY;
+    }
+    
+    public function getStrategyName() {
+    	return EDI::_DELFOR_;
+    }
+    
+    public function __destruct() {
+    	fclose($this->_FILE_1);
+    	fclose($this->_FILE_2);
+    	
+    	unset($this->_LINES_1);
+    	unset($this->_LINES_2);
+    	unset($this->_FINAL_LINES);
+    	unset($this->_COLUMN);
+    	unset($this->file);
     }
 }
 

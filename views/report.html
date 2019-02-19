@@ -18,13 +18,18 @@
 			<span>export to excel</span>
 		</a>
 	</div>
-	<img id="logo-topo" src="/res/images/logo.jpg"/>
+	<a href="/"><img id="logo-topo" src="/res/images/logo.jpg"/></a>
 </div>
 <div id="content">
 	<div id="title">
 		<hgroup>
-		<h1>PROGRAMAÇÃO DE PEÇA/MATERIAL - ANALÍTICO</h1>
-		<h3>GMB - GENERAL MOTORS DO BRASIL S/A</h3>
+			<h1>PROGRAMAÇÃO DE PEÇA/MATERIAL - ANALÍTICO</h1>
+			<h3>GMB - GENERAL MOTORS DO BRASIL S/A</h3>
+			{if="$delfor->getStrategy() == 0"}
+			<h2 style='color: #DDD; text-shadow: 0px 0px 15px #f66b29'>DELFOR</h2>
+			{else}
+			<h2 style='color: #DDD; text-shadow: 0px 0px 15px #628f35'>DELJIT</h2>
+			{/if}
 		</hgroup>
 	</div>
 	<div id="delfor-data">
@@ -67,38 +72,47 @@
 			</tr>
 		</table>
 			{loop="$delfor->getLIN()"}
+		<div id="item">
 			{$value1->startFormat()}
 		<table id="tb-delfor-item">
 			<caption id="caption-item">Código do Item: </caption>
 			<caption id="caption-item-number">{$value1->getPartNumber()}</caption>
 			<caption id="caption-crono">CRONOGRAMA</caption>
 			<thead>
+			{if="$delfor->getStrategy() === 0"}
 			<tr>
 				<td>TIPO DE</td>
 				<td>FREQUÊNCIA</td>
-				<td>DATA-HORA</td>
+				<td>DATA</td>
 				<td>QUANTIDADE</td>
 				<td>QTDE ACUMULADA</td>			
 			</tr>
+			{else}
+			<tr>
+				<td>DATA</td>
+				<td>QUANTIDADE</td>	
+			</tr>
+			{/if}
 			</thead>
 			<tbody>
-			{loop="$value1->getLineItemValues().TYPE"}
+			{loop="$value1->getLineItemValues().QUANTITY"}
 			<tr>
-			
+				{if="$delfor->getStrategy() === 0"}
 				<td>{$value1->getLineItemValues().TYPE.$counter2}</td>
 				
 				<td>{$value1->getLineItemValues().FREQUENCY.$counter2}</td>
-				
+				{/if}
 				<td>{$value1->getLineItemValues().DATE_TIME.$counter2}</td>
 	
 				<td>{$value1->getLineItemValues().QUANTITY.$counter2}</td>
-				
+				{if="$delfor->getStrategy() === 0"}
 				<td>{$value1->getLineItemValues().ACCUMULATED.$counter2}</td>
-				
+				{/if}
 			</tr>
 			{/loop}
 			</tbody>
 		</table>
+		</div>
 			{/loop}
 	</div>
 </div>
