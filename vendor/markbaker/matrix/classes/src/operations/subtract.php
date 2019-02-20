@@ -14,26 +14,26 @@ use Matrix\Operators\Subtraction;
 /**
  * Subtracts two or more matrices
  *
- * @param     mixed[]    $matrixValues   The matrices to subtract
- * @return    Matrix
- * @throws    Exception
+ * @param mixed[] $matrixValues
+ *        	The matrices to subtract
+ * @return Matrix
+ * @throws Exception
  */
-function subtract(...$matrixValues)
-{
-    if (count($matrixValues) < 2) {
-        throw new Exception('This operation requires at least 2 arguments');
-    }
+function subtract(...$matrixValues) {
+	if (count ( $matrixValues ) < 2) {
+		throw new Exception ( 'This operation requires at least 2 arguments' );
+	}
 
-    $matrix = array_shift($matrixValues);
-    if (!is_object($matrix) || !($matrix instanceof Matrix)) {
-        $matrix = new Matrix($matrix);
-    }
+	$matrix = array_shift ( $matrixValues );
+	if (! is_object ( $matrix ) || ! ($matrix instanceof Matrix)) {
+		$matrix = new Matrix ( $matrix );
+	}
 
-    $result = new Subtraction($matrix);
+	$result = new Subtraction ( $matrix );
 
-    foreach ($matrixValues as $matrix) {
-        $result->execute($matrix);
-    }
+	foreach ( $matrixValues as $matrix ) {
+		$result->execute ( $matrix );
+	}
 
-    return $result->result();
+	return $result->result ();
 }

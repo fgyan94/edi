@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Slim - a micro PHP 5 framework
  *
@@ -39,10 +40,8 @@ namespace Slim\Exception;
  * processing and return control flow to the outer PHP script.
  *
  * @package Slim
- * @author  Josh Lockhart
- * @since   1.0.0
+ * @author Josh Lockhart
+ * @since 1.0.0
  */
-class Stop extends \Exception
-{
-
+class Stop extends \Exception {
 }

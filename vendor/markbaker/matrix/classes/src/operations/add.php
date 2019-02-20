@@ -14,26 +14,26 @@ use Matrix\Operators\Addition;
 /**
  * Adds two or more matrices
  *
- * @param     mixed[]    $matrixValues   The matrices to add
- * @return    Matrix
- * @throws    Exception
+ * @param mixed[] $matrixValues
+ *        	The matrices to add
+ * @return Matrix
+ * @throws Exception
  */
-function add(...$matrixValues)
-{
-    if (count($matrixValues) < 2) {
-        throw new Exception('This operation requires at least 2 arguments');
-    }
+function add(...$matrixValues) {
+	if (count ( $matrixValues ) < 2) {
+		throw new Exception ( 'This operation requires at least 2 arguments' );
+	}
 
-    $matrix = array_shift($matrixValues);
-    if (!is_object($matrix) || !($matrix instanceof Matrix)) {
-        $matrix = new Matrix($matrix);
-    }
+	$matrix = array_shift ( $matrixValues );
+	if (! is_object ( $matrix ) || ! ($matrix instanceof Matrix)) {
+		$matrix = new Matrix ( $matrix );
+	}
 
-    $result = new Addition($matrix);
+	$result = new Addition ( $matrix );
 
-    foreach ($matrixValues as $matrix) {
-        $result->execute($matrix);
-    }
+	foreach ( $matrixValues as $matrix ) {
+		$result->execute ( $matrix );
+	}
 
-    return $result->result();
+	return $result->result ();
 }

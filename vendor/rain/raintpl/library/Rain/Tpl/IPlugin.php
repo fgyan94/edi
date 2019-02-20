@@ -1,4 +1,5 @@
 <?php
+
 namespace Rain\Tpl;
 
 /**
@@ -8,7 +9,7 @@ namespace Rain\Tpl;
  * Example implementation:
  * <code>
  * public function declare_hooks() {
- *   return array('before_parse', 'after_parse' => 'custom_method');
+ * return array('before_parse', 'after_parse' => 'custom_method');
  * }
  * </code>
  *
@@ -18,20 +19,19 @@ namespace Rain\Tpl;
  *
  * Method can modify some properties. No return value is expected.
  */
-interface IPlugin
-{
-    /**
-     * Returns a list of hooks that are implemented by the plugin.
-     * This should be an array containing:
-     * - a key/value pair where key is hook name and value is implementing method,
-     * - a value only when hook has same name as method.
-     */
-    public function declareHooks();
+interface IPlugin {
+	/**
+	 * Returns a list of hooks that are implemented by the plugin.
+	 * This should be an array containing:
+	 * - a key/value pair where key is hook name and value is implementing method,
+	 * - a value only when hook has same name as method.
+	 */
+	public function declareHooks();
 
-    /**
-     * Sets plugin options.
-     *
-     * @var array
-     */
-    public function setOptions($options);
+	/**
+	 * Sets plugin options.
+	 *
+	 * @var array
+	 */
+	public function setOptions($options);
 }

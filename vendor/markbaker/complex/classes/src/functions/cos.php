@@ -12,23 +12,17 @@ namespace Complex;
 /**
  * Returns the cosine of a complex number.
  *
- * @param     Complex|mixed    $complex    Complex number or a numeric value.
- * @return    Complex          The cosine of the complex argument.
- * @throws    Exception        If argument isn't a valid real or complex number.
+ * @param Complex|mixed $complex
+ *        	Complex number or a numeric value.
+ * @return Complex The cosine of the complex argument.
+ * @throws Exception If argument isn't a valid real or complex number.
  */
-function cos($complex)
-{
-    $complex = Complex::validateComplexArgument($complex);
+function cos($complex) {
+	$complex = Complex::validateComplexArgument ( $complex );
 
-    if ($complex->isReal()) {
-        return new Complex(\cos($complex->getReal()));
-    }
+	if ($complex->isReal ()) {
+		return new Complex ( \cos ( $complex->getReal () ) );
+	}
 
-    return conjugate(
-        new Complex(
-            \cos($complex->getReal()) * \cosh($complex->getImaginary()),
-            \sin($complex->getReal()) * \sinh($complex->getImaginary()),
-            $complex->getSuffix()
-        )
-    );
+	return conjugate ( new Complex ( \cos ( $complex->getReal () ) * \cosh ( $complex->getImaginary () ), \sin ( $complex->getReal () ) * \sinh ( $complex->getImaginary () ), $complex->getSuffix () ) );
 }

@@ -29,20 +29,15 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-class LogWriterTest extends PHPUnit_Framework_TestCase
-{
-    public function testInstantiation()
-    {
-        $this->expectOutputString('Hello!' . PHP_EOL);
-        $handle = fopen('php://output', 'w');
-        $fw = new \Slim\LogWriter($handle);
-        $this->assertTrue($fw->write('Hello!') > 0); //<-- Returns number of bytes written if successful
-    }
-
-    public function testInstantiationWithNonResource()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-        $fw = new \Slim\LogWriter(@fopen('/foo/bar.txt', 'w'));
-    }
+class LogWriterTest extends PHPUnit_Framework_TestCase {
+	public function testInstantiation() {
+		$this->expectOutputString ( 'Hello!' . PHP_EOL );
+		$handle = fopen ( 'php://output', 'w' );
+		$fw = new \Slim\LogWriter ( $handle );
+		$this->assertTrue ( $fw->write ( 'Hello!' ) > 0 ); // <-- Returns number of bytes written if successful
+	}
+	public function testInstantiationWithNonResource() {
+		$this->setExpectedException ( 'InvalidArgumentException' );
+		$fw = new \Slim\LogWriter ( @fopen ( '/foo/bar.txt', 'w' ) );
+	}
 }

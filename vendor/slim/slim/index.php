@@ -9,7 +9,7 @@
  */
 require 'Slim/Slim.php';
 
-\Slim\Slim::registerAutoloader();
+\Slim\Slim::registerAutoloader ();
 
 /**
  * Step 2: Instantiate a Slim application
@@ -19,7 +19,7 @@ require 'Slim/Slim.php';
  * your Slim application now by passing an associative array
  * of setting names and values into the application constructor.
  */
-$app = new \Slim\Slim();
+$app = new \Slim\Slim ();
 
 /**
  * Step 3: Define the Slim application routes
@@ -31,8 +31,8 @@ $app = new \Slim\Slim();
  */
 
 // GET route
-$app->get('/', function () {
-    $template = <<<EOT
+$app->get ( '/', function () {
+	$template = <<<EOT
 <!DOCTYPE html>
     <html>
         <head>
@@ -125,23 +125,23 @@ $app->get('/', function () {
         </body>
     </html>
 EOT;
-    echo $template;
-});
+	echo $template;
+} );
 
 // POST route
-$app->post('/post', function () {
-    echo 'This is a POST route';
-});
+$app->post ( '/post', function () {
+	echo 'This is a POST route';
+} );
 
 // PUT route
-$app->put('/put', function () {
-    echo 'This is a PUT route';
-});
+$app->put ( '/put', function () {
+	echo 'This is a PUT route';
+} );
 
 // DELETE route
-$app->delete('/delete', function () {
-    echo 'This is a DELETE route';
-});
+$app->delete ( '/delete', function () {
+	echo 'This is a DELETE route';
+} );
 
 /**
  * Step 4: Run the Slim application
@@ -149,4 +149,4 @@ $app->delete('/delete', function () {
  * This method should be called last. This executes the Slim application
  * and returns the HTTP response to the HTTP client.
  */
-$app->run();
+$app->run ();

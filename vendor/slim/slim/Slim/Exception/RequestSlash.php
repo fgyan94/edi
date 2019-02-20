@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Slim - a micro PHP 5 framework
  *
@@ -42,10 +43,8 @@ namespace Slim\Exception;
  * to the same resource URI with a trailing slash.
  *
  * @package Slim
- * @author  Josh Lockhart
- * @since   1.0.0
+ * @author Josh Lockhart
+ * @since 1.0.0
  */
-class RequestSlash extends \Exception
-{
-
+class RequestSlash extends \Exception {
 }

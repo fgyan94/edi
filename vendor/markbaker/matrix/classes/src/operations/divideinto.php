@@ -14,26 +14,26 @@ use Matrix\Operators\Division;
 /**
  * Divides two or more matrix numbers
  *
- * @param     array of string|integer|float|Matrix    $matrixValues   The numbers to divide
- * @return    Matrix
+ * @param
+ *        	array of string|integer|float|Matrix $matrixValues The numbers to divide
+ * @return Matrix
  */
-function divideinto(...$matrixValues)
-{
-    if (count($matrixValues) < 2) {
-        throw new \Exception('This function requires at least 2 arguments');
-    }
-    $matrixValues = array_reverse($matrixValues);
+function divideinto(...$matrixValues) {
+	if (count ( $matrixValues ) < 2) {
+		throw new \Exception ( 'This function requires at least 2 arguments' );
+	}
+	$matrixValues = array_reverse ( $matrixValues );
 
-    $matrix = array_shift($matrixValues);
-    if (!is_object($matrix) || !($matrix instanceof Matrix)) {
-        $matrix = new Matrix($matrix);
-    }
+	$matrix = array_shift ( $matrixValues );
+	if (! is_object ( $matrix ) || ! ($matrix instanceof Matrix)) {
+		$matrix = new Matrix ( $matrix );
+	}
 
-    $result = new Division($matrix);
+	$result = new Division ( $matrix );
 
-    foreach ($matrixValues as $matrix) {
-        $result->execute($matrix);
-    }
+	foreach ( $matrixValues as $matrix ) {
+		$result->execute ( $matrix );
+	}
 
-    return $result->result();
+	return $result->result ();
 }

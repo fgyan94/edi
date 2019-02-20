@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Slim - a micro PHP 5 framework
  *
@@ -41,10 +42,8 @@ namespace Slim\Exception;
  * HTTP 404 Not Found response will be sent to the client.
  *
  * @package Slim
- * @author  Josh Lockhart
- * @since   1.0.0
+ * @author Josh Lockhart
+ * @since 1.0.0
  */
-class Pass extends \Exception
-{
-
+class Pass extends \Exception {
 }

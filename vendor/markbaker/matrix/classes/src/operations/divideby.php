@@ -14,25 +14,25 @@ use Matrix\Operators\Division;
 /**
  * Divides two or more matrix numbers
  *
- * @param     mixed[]    $matrixValues   The matrices to divide
- * @return    Matrix
+ * @param mixed[] $matrixValues
+ *        	The matrices to divide
+ * @return Matrix
  */
-function divideby(...$matrixValues)
-{
-    if (count($matrixValues) < 2) {
-        throw new \Exception('This function requires at least 2 arguments');
-    }
+function divideby(...$matrixValues) {
+	if (count ( $matrixValues ) < 2) {
+		throw new \Exception ( 'This function requires at least 2 arguments' );
+	}
 
-    $matrix = array_shift($matrixValues);
-    if (!is_object($matrix) || !($matrix instanceof Matrix)) {
-        $matrix = new Matrix($matrix);
-    }
+	$matrix = array_shift ( $matrixValues );
+	if (! is_object ( $matrix ) || ! ($matrix instanceof Matrix)) {
+		$matrix = new Matrix ( $matrix );
+	}
 
-    $result = new Division($matrix);
+	$result = new Division ( $matrix );
 
-    foreach ($matrixValues as $matrix) {
-        $result->execute($matrix);
-    }
+	foreach ( $matrixValues as $matrix ) {
+		$result->execute ( $matrix );
+	}
 
-    return $result->result();
+	return $result->result ();
 }

@@ -7,30 +7,35 @@ require "library/Rain/autoload.php";
 use Rain\Tpl;
 
 // config
-$config = array(
-    "tpl_dir"       => "templates/simple/",
-    "cache_dir"     => "cache/",
-    "debug"         => true, // set to false to improve the speed
+$config = array (
+		"tpl_dir" => "templates/simple/",
+		"cache_dir" => "cache/",
+		"debug" => true // set to false to improve the speed
 );
 
-Tpl::configure( $config );
-
+Tpl::configure ( $config );
 
 // Add PathReplace plugin (necessary to load the CSS with path replace)
-Tpl::registerPlugin( new Tpl\Plugin\PathReplace() );
-
+Tpl::registerPlugin ( new Tpl\Plugin\PathReplace () );
 
 // create the Tpl object
-$tpl = new Tpl;
+$tpl = new Tpl ();
 
 // assign a variable
-$tpl->assign( "name", "Obi Wan Kenoby" );
+$tpl->assign ( "name", "Obi Wan Kenoby" );
 
 // assign an array
-$tpl->assign( "week", array( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ) );
+$tpl->assign ( "week", array (
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+		"Sunday"
+) );
 
 // draw the template
-$tpl->draw( "simple_template" );
-
+$tpl->draw ( "simple_template" );
 
 ?>
