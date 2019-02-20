@@ -7,7 +7,7 @@ class EDI_FILE {
 	public function __construct($_FILE) {
 		$_TMP_FILE = $_FILE ['tmp_name'];
 		$_FILENAME = $_FILE ['name'];
-		$_DESTINATION = $GLOBALS ['PATH_DIR_UPLOAD'] . $_FILENAME;
+		$_DESTINATION = $GLOBALS ['PATH_DIR_UPLOAD'] . DIRECTORY_SEPARATOR . $_FILENAME;
 
 		move_uploaded_file ( $_TMP_FILE, $_DESTINATION );
 
