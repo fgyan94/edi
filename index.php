@@ -73,6 +73,12 @@ $app->post ( '/report', function () {
 	$_EDI = new EDI ( $_EDI_FILE->getFile () );
 	$_EDI->startExplode ();
 
+// 	for($i = 0; $i < count($_EDI->getInstance()->getLIN()); $i++) {
+// 	    $_EDI->getInstance()->getLIN()[$i]->startFormat();
+// 	    var_dump($_EDI->getInstance()->getLIN()[$i]->getLineItemValues());
+	    
+// 	}
+// 	exit;
 	$page = new Page ();
 	$page->setTPL ( 'report', array (
 			"delfor" => $_EDI->getInstance (),

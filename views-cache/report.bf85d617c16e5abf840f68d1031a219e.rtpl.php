@@ -1,5 +1,4 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
-<!DOCTYPE html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8" />
@@ -10,19 +9,23 @@
 	<div id="header">
 		<div id="menu-topo">
 			<a href="/"> <img alt="Home" src="/res/images/home.png"> <span>home</span>
-			</a> <a
-				href="/export/<?php echo htmlspecialchars( $filename, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-				<img alt="Export to Excel" src="/res/images/export-excel.png"> <span>export
-					to excel</span>
+			</a> <a href="/export/<?php echo htmlspecialchars( $filename, ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <img alt="Export to Excel"
+				src="/res/images/export-excel.png"> <span>export to
+					excel</span>
 			</a>
 		</div>
-		<img id="logo-topo" src="/res/images/logo.jpg" />
+		<a href="/"><img id="logo-topo" src="/res/images/logo.jpg" /></a>
 	</div>
 	<div id="content">
 		<div id="title">
 			<hgroup>
 				<h1>PROGRAMAÇÃO DE PEÇA/MATERIAL - ANALÍTICO</h1>
 				<h3>GMB - GENERAL MOTORS DO BRASIL S/A</h3>
+				<?php if( $delfor->getStrategy() == 0 ){ ?>
+				<h2 style='color: #DDD; text-shadow: 0px 0px 15px #f66b29'>DELFOR</h2>
+				<?php }else{ ?>
+				<h2 style='color: #DDD; text-shadow: 0px 0px 15px #628f35'>DELJIT</h2>
+				<?php } ?>
 			</hgroup>
 		</div>
 		<div id="delfor-data">
@@ -43,14 +46,16 @@
 				<tr>
 					<td class="header">Função da Mensagem:</td>
 					<td class="cell"><?php echo htmlspecialchars( $delfor->getMsgFunc(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-				<?php if( $delfor->getStrategy() == 0 ){ ?>
-				<td class="header">Indicador de Processamento:</td>
-					<td class="cell"><?php echo htmlspecialchars( $delfor->getProcessIndic(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-				<?php }else{ ?>
-				<td class="header">Indicador de Status:</td>
-					<td class="cell"><?php echo htmlspecialchars( $delfor->getStatusIndic(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-				<?php } ?>				
-			</tr>
+					
+					<?php if( $delfor->getStrategy() == 0 ){ ?>
+					<td class="header">Indicador de Processamento:</td>
+					<td class="cell"><?php echo htmlspecialchars( $delfor->getProcessIndic(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td> 
+					<?php }else{ ?>
+					
+					<td class="header">Indicador de Status:</td>
+					<td class="cell"><?php echo htmlspecialchars( $delfor->getStatusIndic(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td> 
+					<?php } ?>
+				</tr>
 				<tr>
 					<td class="header">Início do Horizonte:</td>
 					<td class="cell"><?php echo htmlspecialchars( $delfor->getIniHoriz(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -65,40 +70,48 @@
 				</tr>
 			</table>
 			<?php $counter1=-1; $newvar1=$delfor->getLIN(); if( isset($newvar1) && ( is_array($newvar1) || $newvar1 instanceof Traversable ) && sizeof($newvar1) ) foreach( $newvar1 as $key1 => $value1 ){ $counter1++; ?>
-			<?php echo htmlspecialchars( $value1->startFormat(), ENT_COMPAT, 'UTF-8', FALSE ); ?>
-		<table id="tb-delfor-item">
-				<caption id="caption-item">Código do Item:</caption>
-				<caption id="caption-item-number"><?php echo htmlspecialchars( $value1->getPartNumber(), ENT_COMPAT, 'UTF-8', FALSE ); ?></caption>
-				<caption id="caption-crono">CRONOGRAMA</caption>
-				<thead>
-					<tr>
-						<td>TIPO DE</td>
-						<td>FREQUÊNCIA</td>
-						<td>DATA-HORA</td>
-						<td>QUANTIDADE</td>
-						<td>QTDE ACUMULADA</td>
-					</tr>
-				</thead>
-				<tbody>
-			<?php $counter2=-1; $newvar2=$value1->getLineItemValues()["TYPE"]; if( isset($newvar2) && ( is_array($newvar2) || $newvar2 instanceof Traversable ) && sizeof($newvar2) ) foreach( $newvar2 as $key2 => $value2 ){ $counter2++; ?>
-			<tr>
-
-						<td><?php echo htmlspecialchars( $value1->getLineItemValues()["TYPE"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-
-						<td><?php echo htmlspecialchars( $value1->getLineItemValues()["FREQUENCY"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-
-						<td><?php echo htmlspecialchars( $value1->getLineItemValues()["DATE_TIME"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-
-						<td><?php echo htmlspecialchars( $value1->getLineItemValues()["QUANTITY"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-
-						<td><?php echo htmlspecialchars( $value1->getLineItemValues()["ACCUMULATED"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-
-					</tr>
+			<div id="item">
+				<table id="tb-delfor-item">
+					<caption id="caption-item">Código do Item:</caption>
+					<caption id="caption-item-number"><?php echo htmlspecialchars( $value1->getPartNumber(), ENT_COMPAT, 'UTF-8', FALSE ); ?></caption>
+					<caption id="caption-crono">CRONOGRAMA</caption>
+					<thead>
+						<?php if( $delfor->getStrategy() === 0 ){ ?>
+						<tr>
+							<td>TIPO DE</td>
+							<td>FREQUÊNCIA</td>
+							<td>DATA</td>
+							<td>QUANTIDADE</td>
+							<td>QTDE ACUMULADA</td>
+						</tr>
+						<?php }else{ ?>
+						<tr>
+							<td>DATA</td>
+							<td>QUANTIDADE</td>
+						</tr>
+						<?php } ?>
+					</thead>
+					<tbody>
+						<?php $counter2=-1; $newvar2=$value1->getLineItemValues()["QUANTITY"]; if( isset($newvar2) && ( is_array($newvar2) || $newvar2 instanceof Traversable ) && sizeof($newvar2) ) foreach( $newvar2 as $key2 => $value2 ){ $counter2++; ?>
+						<tr>
+							<?php if( $delfor->getStrategy() === 0 ){ ?>
+								<td><?php echo htmlspecialchars( $value1->getLineItemValues()["TYPE"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+								<td><?php echo htmlspecialchars( $value1->getLineItemValues()["FREQUENCY"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+							 <?php } ?>
+							 
+							<td><?php echo htmlspecialchars( $value1->getLineItemValues()["DATE_TIME"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+							<td><?php echo htmlspecialchars( $value1->getLineItemValues()["QUANTITY"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+							
+							<?php if( $delfor->getStrategy() === 0 ){ ?>
+								<td><?php echo htmlspecialchars( $value1->getLineItemValues()["ACCUMULATED"]["$counter2"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+							<?php } ?>
+						</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
 			<?php } ?>
-			</tbody>
-			</table>
-			<?php } ?>
-	</div>
+		</div>
 	</div>
 
 </body>

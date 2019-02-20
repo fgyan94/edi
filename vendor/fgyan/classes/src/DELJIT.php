@@ -5,7 +5,7 @@ namespace edi;
 class DELJIT extends DELFOR {
 	public function __construct($_FILENAME) {
 		parent::__construct ( $_FILENAME );
-		parent::setStrategy ( EDI::_DELJIT_STRATEGY_ );
+		$this->setStrategy ( EDI::_DELJIT_STRATEGY_ );
 
 		$GLOBALS ['STRATEGY'] = $this->getStrategy ();
 	}

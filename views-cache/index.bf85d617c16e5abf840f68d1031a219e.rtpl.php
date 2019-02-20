@@ -1,5 +1,4 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
-<!DOCTYPE html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8" />
@@ -20,12 +19,12 @@
 			<input id="file" name="file" type="file" accept=".txt"
 				onchange='change()' ondragover="dragOver()"
 				ondragleave="dragLeave()" ondrop="dragLeave()" />
-			<div class="overlay-layer" id="file-label">Drop or click in this area
-				to upload</div>
+			<div class="overlay-layer" id="file-label">Drop or click in
+				this area to upload</div>
 			<button id="generate" type="submit" disabled="disabled"
 				onmouseover='hoverButton()' onmouseout='outButton()'
-				onmousedown='pressButton()' onmouseup='outButton()'>Generate Report
-			</button>
+				onmousedown='pressButton()' onmouseup='outButton()'>
+				Generate Report</button>
 		</form>
 	</div>
 

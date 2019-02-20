@@ -46,11 +46,15 @@
 				<tr>
 					<td class="header">Função da Mensagem:</td>
 					<td class="cell">{$delfor->getMsgFunc()}</td>
+					
 					{if="$delfor->getStrategy() == 0"}
 					<td class="header">Indicador de Processamento:</td>
-					<td class="cell">{$delfor->getProcessIndic()}</td> {else}
+					<td class="cell">{$delfor->getProcessIndic()}</td> 
+					{else}
+					
 					<td class="header">Indicador de Status:</td>
-					<td class="cell">{$delfor->getStatusIndic()}</td> {/if}
+					<td class="cell">{$delfor->getStatusIndic()}</td> 
+					{/if}
 				</tr>
 				<tr>
 					<td class="header">Início do Horizonte:</td>
@@ -67,7 +71,6 @@
 			</table>
 			{loop="$delfor->getLIN()"}
 			<div id="item">
-				{$value1->startFormat()}
 				<table id="tb-delfor-item">
 					<caption id="caption-item">Código do Item:</caption>
 					<caption id="caption-item-number">{$value1->getPartNumber()}</caption>
@@ -92,14 +95,15 @@
 						{loop="$value1->getLineItemValues().QUANTITY"}
 						<tr>
 							{if="$delfor->getStrategy() === 0"}
-							<td>{$value1->getLineItemValues().TYPE.$counter2}</td>
-
-							<td>{$value1->getLineItemValues().FREQUENCY.$counter2}</td> {/if}
+								<td>{$value1->getLineItemValues().TYPE.$counter2}</td>
+								<td>{$value1->getLineItemValues().FREQUENCY.$counter2}</td>
+							 {/if}
+							 
 							<td>{$value1->getLineItemValues().DATE_TIME.$counter2}</td>
-
 							<td>{$value1->getLineItemValues().QUANTITY.$counter2}</td>
+							
 							{if="$delfor->getStrategy() === 0"}
-							<td>{$value1->getLineItemValues().ACCUMULATED.$counter2}</td>
+								<td>{$value1->getLineItemValues().ACCUMULATED.$counter2}</td>
 							{/if}
 						</tr>
 						{/loop}

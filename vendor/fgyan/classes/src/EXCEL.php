@@ -54,7 +54,7 @@ class EXCEL {
 				);
 
 				$this->_EXCEL->getActiveSheet ()->mergeCells ( "E16:G16" )->setCellValue ( "E16", $_LIN->getPartNumber () )->getStyle ( "E16" )->applyFromArray ( $_STYLE );
-
+                
 				for($j = 0; $j < $_LIN->getCount (); $j ++, $this->_ROW ++) {
 					$_STYLE ['alignment'] ['horizontal'] = Alignment::HORIZONTAL_CENTER;
 

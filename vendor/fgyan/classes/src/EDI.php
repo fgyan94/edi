@@ -7,10 +7,12 @@ class EDI {
 	public const _DELJIT_STRATEGY_ = 1;
 	public const _DELFOR_ = 'DELFOR';
 	public const _DELJIT_ = 'DELJIT';
+	
 	private $_FILENAME;
 	private $_FILE_1;
 	private $_FILE_2;
 	private $_INSTANCE;
+	
 	public function __construct($_FILENAME) {
 		$this->_FILENAME = $_FILENAME;
 	}
@@ -66,9 +68,10 @@ class EDI {
 		return $this->_INSTANCE;
 	}
 	public function __destruct() {
-		fclose ( $this->_FILE_1 );
-		fclose ( $this->_FILE_2 );
-		unset ( $this->_FILENAME );
+		fclose($this->_FILE_1);
+		fclose($this->_FILE_2);
+		unset($this->_FILENAME);
+		unset($this->_INSTANCE);
 	}
 }
 

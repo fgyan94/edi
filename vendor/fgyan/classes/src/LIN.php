@@ -186,9 +186,14 @@ class LIN extends SEGMENT {
 		if ($_QTY instanceof QTY) {
 			foreach ( $_QTY->getSubSeg () as $sub_key_2 => $sub_value_2 ) {
 				if ($sub_value_2 instanceof DTM) {
-					$timestamp = strtotime ( $sub_value_2->getValues () ['DTM_PERIOD'] ['DATE_TIME'] );
-					$date = date ( 'd/m/Y', $timestamp );
-					array_push ( $this->_ITEM_VALUES ['DATE_TIME'], $date );
+				    $_DTM_DELJIT = $sub_value_2->getValues () ['DTM_PERIOD'] ['QUALIFIER'];
+				    $_STR_DELJIT = ($GLOBALS ['STRATEGY'] === EDI::_DELJIT_STRATEGY_) && $_DTM_DELJIT == 10;
+				    
+				    if ($GLOBALS ['STRATEGY'] === EDI::_DELFOR_STRATEGY_ || $_STR_DELJIT) {
+    					$timestamp = strtotime ( $sub_value_2->getValues () ['DTM_PERIOD'] ['DATE_TIME'] );
+    					$date = date ( 'd/m/Y', $timestamp );
+    					array_push ( $this->_ITEM_VALUES ['DATE_TIME'], $date );
+				    }
 				}
 			}
 		}
@@ -203,7 +208,7 @@ class LIN extends SEGMENT {
 					}
 				}
 			} else if ($GLOBALS ['STRATEGY'] === EDI::_DELJIT_STRATEGY_) {
-				$this->checkQuantity ( $value );
+			    $this->checkQuantity ( $value );
 			}
 		}
 	}
