@@ -30,11 +30,13 @@ function change() {
 function setFileName(fileExists) {
 	var input = document.getElementById('file');
 	var name = 'Selecionar arquivo';
-	
-	if(fileExists == true)
+		
+	if(fileExists == true) {
 		name = input.files[0].name;
+	}
 	
 	document.getElementById('file-label').innerHTML = name;
+	document.getElementById('file-label').style.border='4px solid #000000';
 }
 
 function dragOver() {

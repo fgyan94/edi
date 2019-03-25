@@ -62,7 +62,7 @@ $app->get ( '/export', function () {
 } );
 
 $app->post ( '/report', function () {
-	if (pathinfo ( $_FILES ['file'] ['name'], PATHINFO_EXTENSION ) !== 'txt') {
+	if (pathinfo ( $_FILES ['fileup'] ['name'], PATHINFO_EXTENSION ) !== 'txt') {
 		echo "<script>
                     alert('Arquivo inválido! Apenas arquivos texto (.TXT) são permitidos');
                     window.location = '/';
@@ -70,7 +70,7 @@ $app->post ( '/report', function () {
 		exit ();
 	}
 
-	$_EDI_FILE = new EDI_FILE ( $_FILES ['file'] );
+	$_EDI_FILE = new EDI_FILE ( $_FILES ['fileup'] );
 	$_EDI = new EDI ( $_EDI_FILE->getFile () );
 	$_EDI->startExplode ();
 	$page = new Page ();

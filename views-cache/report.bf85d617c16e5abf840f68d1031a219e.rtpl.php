@@ -5,7 +5,7 @@
 <title>SL BRASIL - DELFOR/EDI</title>
 <link rel="stylesheet" href="/res/css/style.css" />
 </head>
-<body>
+<body id="report">
 	<div id="header">
 		<div id="menu-topo">
 			<a href="/"> <img alt="Home" src="/res/images/home.png"> <span>página inicial</span>

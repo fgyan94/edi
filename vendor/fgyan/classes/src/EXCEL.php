@@ -69,8 +69,6 @@ class EXCEL {
 						$this->setCellValue ( "F", "H", $_ITEMS ['DATE_TIME'], $_STYLE, $j );
 						$this->setCellValue ( "J", "L", $_ITEMS ['QUANTITY'], $_STYLE, $j );
 					}
-					$this->setCellValue ( "F", "H", $_ITEMS ['DATE_TIME'], $_STYLE, $j );
-					$this->setCellValue ( "J", "L", $_ITEMS ['QUANTITY'], $_STYLE, $j );
 				}
 
 				$this->_ROW = 20;
