@@ -23,8 +23,19 @@ class EDI {
 		$this->lineExplode ();
 		$this->compareLines ();
 		$this->build ();
-
-		$this->_INSTANCE->startExplode ();
+        
+		if($this->_INSTANCE == null) {
+		    echo "<script>
+                    alert('"
+                            ."Não foi possível gerar nenhum relatório a partir do arquivo carregado..." 
+                            ."Por favor, selecione outro arquivo e tente novamente!"
+                    ."');
+                    window.location = '/';
+            </script>";
+		    exit ();
+		}
+		
+		$this->_INSTANCE->startExplode();
 	}
 	private function lineExplode() {
 		$this->_LINES_1 = explode ( "'", fgets ( $this->_FILE_1 ) );

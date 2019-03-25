@@ -8,10 +8,9 @@
 <body>
 	<div id="header">
 		<div id="menu-topo">
-			<a href="/"> <img alt="Home" src="/res/images/home.png"> <span>home</span>
+			<a href="/"> <img alt="Home" src="/res/images/home.png"> <span>página inicial</span>
 			</a> <a href="/export/<?php echo htmlspecialchars( $filename, ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <img alt="Export to Excel"
-				src="/res/images/export-excel.png"> <span>export to
-					excel</span>
+				src="/res/images/export-excel.png"> <span>exportar para excel</span>
 			</a>
 		</div>
 		<a href="/"><img id="logo-topo" src="/res/images/logo.jpg" /></a>

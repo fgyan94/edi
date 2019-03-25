@@ -238,7 +238,7 @@ class DELFOR {
 	public function getProcessIndic() {
 		return $this->_SEG ['PROCESS_INDIC'];
 	}
-	public function getLIN() {
+	public function getLIN() {	    
 		return $this->_SEG ['LIN'];
 	}
 	protected function setStrategy($_STRATEGY = EDI::_DELFOR_STRATEGY_) {

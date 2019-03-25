@@ -69,12 +69,15 @@ class EXCEL {
 						$this->setCellValue ( "F", "H", $_ITEMS ['DATE_TIME'], $_STYLE, $j );
 						$this->setCellValue ( "J", "L", $_ITEMS ['QUANTITY'], $_STYLE, $j );
 					}
+					$this->setCellValue ( "F", "H", $_ITEMS ['DATE_TIME'], $_STYLE, $j );
+					$this->setCellValue ( "J", "L", $_ITEMS ['QUANTITY'], $_STYLE, $j );
 				}
 
 				$this->_ROW = 20;
 			}
 		}
-
+       
+		
 		$this->_EXCEL->setActiveSheetIndex ( 0 );
 		$this->_EXCEL->getProperties ()->setCreator ( 'Yan Gonçalves' )->setLastModifiedBy ( 'Yan Gonçalves' )->setTitle ( 'RESUMO EDI - SL BRASIL' )->setSubject ( 'DELFOR' )->setDescription ( 'DOCUMENTO DELFOR - GM' )->setCategory ( 'DELFOR FILE' );
 

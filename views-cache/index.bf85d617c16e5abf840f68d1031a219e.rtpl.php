@@ -11,20 +11,18 @@
 		<img id="logo-topo" src="/res/images/logo.jpg" />
 	</div>
 	<div id="welcome">
-		<h1>Welcome to SL Brasil - EDI</h1>
+		<h1>Bem-vindo à SL Brasil - EDI</h1>
 	</div>
 	<div id="div-file">
 		<form id="form-file" enctype="multipart/form-data" method="post"
 			action="/report">
 			<input id="file" name="file" type="file" accept=".txt"
-				onchange='change()' ondragover="dragOver()"
+				onchange="change()" ondragover="dragOver()"
 				ondragleave="dragLeave()" ondrop="dragLeave()" />
-			<div class="overlay-layer" id="file-label">Drop or click in
-				this area to upload</div>
-			<button id="generate" type="submit" disabled="disabled"
-				onmouseover='hoverButton()' onmouseout='outButton()'
-				onmousedown='pressButton()' onmouseup='outButton()'>
-				Generate Report</button>
+			<div class="overlay-layer" id="file-label">Selecionar arquivo</div>
+			<button id="generate" type="submit" disabled="disabled">
+				Gerar Relatório
+			</button>
 		</form>
 	</div>
 

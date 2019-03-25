@@ -6,7 +6,7 @@ function enableGenerateButton() {
 	button.style.color='#ffffff';
 	button.style.cursor='pointer';
 	
-	setFileName(true);
+	this.setFileName(true);
 }
 
 function disableGenerateButton() {
@@ -17,7 +17,7 @@ function disableGenerateButton() {
 	button.style.color='#808080';
 	button.style.cursor='no-drop';
 
-	setFileName();
+	this.setFileName(false);
 }
 
 function change() {
@@ -27,9 +27,9 @@ function change() {
 		enableGenerateButton();
 }
 
-function setFileName(fileExists = false) {
+function setFileName(fileExists) {
 	var input = document.getElementById('file');
-	var name = 'Drag your file here or click in this area';
+	var name = 'Selecionar arquivo';
 	
 	if(fileExists == true)
 		name = input.files[0].name;

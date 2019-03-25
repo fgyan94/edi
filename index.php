@@ -1,6 +1,6 @@
 <?php
-error_reporting ( 0 );
-ini_set ( “display_errors”, 0 );
+// error_reporting ( 0 );
+// ini_set ( “display_errors”, 0 );
 
 session_start();
 
@@ -19,6 +19,7 @@ global $TEMPLATE;
 $PATH_DIR_DOWNLOAD = $_SERVER ['DOCUMENT_ROOT'] . "/downfiles";
 $PATH_DIR_UPLOAD = $_SERVER ['DOCUMENT_ROOT'] . "/upfiles";
 $TEMPLATE = $_SERVER ['DOCUMENT_ROOT'] . "/res/templates";
+
 
 function clearDIR() {
 	deleteFiles($GLOBALS['PATH_DIR_DOWNLOAD']);
@@ -72,13 +73,6 @@ $app->post ( '/report', function () {
 	$_EDI_FILE = new EDI_FILE ( $_FILES ['file'] );
 	$_EDI = new EDI ( $_EDI_FILE->getFile () );
 	$_EDI->startExplode ();
-
-// 	for($i = 0; $i < count($_EDI->getInstance()->getLIN()); $i++) {
-// 	    $_EDI->getInstance()->getLIN()[$i]->startFormat();
-// 	    var_dump($_EDI->getInstance()->getLIN()[$i]->getLineItemValues());
-	    
-// 	}
-// 	exit;
 	$page = new Page ();
 	$page->setTPL ( 'report', array (
 			"delfor" => $_EDI->getInstance (),

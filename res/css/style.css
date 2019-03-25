@@ -15,7 +15,7 @@ body {
 	padding: 5px;
 	padding-top: 1px;
 	padding-bottom: 150px;
-	box-shadow: 0 0 10px #121258;
+	box-shadow: 0 0 20px #DDD;
 }
 
 img#logo-topo {
@@ -63,12 +63,12 @@ img#logo-topo {
 }
 
 #tb-delfor-data {
-	box-shadow: 0 0 3px blue;
+	box-shadow: 0 0 20px #AAA;
 }
 
 #item {
 	display: block;
-	box-shadow: 0 0 3px blue;
+	box-shadow: 0 0 20px #AAA;
 	width: 75%;
 	height: 75%;
 	margin: 0 auto;
@@ -185,13 +185,13 @@ form#form-file button#generate:active {
 	text-shadow: 0 1px 0 #ccc;
 	margin: 5px;
 	border: 1px solid #121258;
-	width: 150px;
+	width: 170px;
 	outline: none;
 }
 
 #menu-topo a img {
-	width: 28px;
-	height: 28px;
+	width: 30px;
+	height: 30px;
 	background-color: #121258;
 }
 

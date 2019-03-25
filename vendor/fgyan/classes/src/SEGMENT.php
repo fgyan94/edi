@@ -35,11 +35,12 @@ abstract class SEGMENT {
 	public function start($_INDEX, $_LINE, $_CLASS_NAME, $_CLASS_IGNORE = array(), $_HAS_START = true, $_SEG_NUMBER = 0, $_STRATEGY = EDI::_DELFOR_STRATEGY_) {
 		$this->_INDEX = $_INDEX + 1;
 		do {
-			if ($this->_INDEX >= count ( $_LINE ))
-				return;
 
 			$_VALUE = $_LINE [$this->_INDEX];
 			$_SUBS = substr ( $_VALUE, 0, 3 );
+			
+			if ($this->_INDEX >= count ( $_LINE ) || $this->getValues()['ID']['ID'] === $_SUBS)
+			    return;
 
 			if ($_SUBS === $_CLASS_NAME) {
 				$_EDI = "\\edi\\$_CLASS_NAME";
