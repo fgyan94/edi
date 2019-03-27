@@ -10,7 +10,7 @@ class EXCEL {
 	private $_EDI;
 	private $_TAGS;
 	private $_EXCEL;
-	private $_ROW = 20;
+	private $_ROW = 23;
 	private $_STRATEGY;
 	public static function export(EDI $_EDI) {
 		$_EXCEL = new EXCEL ();
@@ -54,6 +54,10 @@ class EXCEL {
 				);
 
 				$this->_EXCEL->getActiveSheet ()->mergeCells ( "E16:G16" )->setCellValue ( "E16", $_LIN->getPartNumber () )->getStyle ( "E16" )->applyFromArray ( $_STYLE );
+				$this->_EXCEL->getActiveSheet ()->mergeCells ( "E17:G17" )->setCellValue ( "E17", $_LIN->getPedido() )->getStyle ( "E17" )->applyFromArray ( $_STYLE );
+				$this->_EXCEL->getActiveSheet ()->mergeCells ( "E18:G18" )->setCellValue ( "E18", $_EDI->getInstance()->getPlanta () )->getStyle ( "E18" )->applyFromArray ( $_STYLE );
+				$this->_EXCEL->getActiveSheet ()->mergeCells ( "E19:G19" )->setCellValue ( "E19", $_LIN->getDoca() )->getStyle ( "E19" )->applyFromArray ( $_STYLE );
+				$this->_EXCEL->getActiveSheet ()->mergeCells ( "E20:G20" )->setCellValue ( "E20", $_LIN->getMaterialHandling () )->getStyle ( "E20" )->applyFromArray ( $_STYLE );
                 
 				for($j = 0; $j < $_LIN->getCount (); $j ++, $this->_ROW ++) {
 					$_STYLE ['alignment'] ['horizontal'] = Alignment::HORIZONTAL_CENTER;
@@ -71,7 +75,7 @@ class EXCEL {
 					}
 				}
 
-				$this->_ROW = 20;
+				$this->_ROW = 23;
 			}
 		}
        

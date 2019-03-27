@@ -50,7 +50,6 @@
 					<td class="header">Indicador de Processamento:</td>
 					<td class="cell"><?php echo htmlspecialchars( $delfor->getProcessIndic(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td> 
 					<?php }else{ ?>
-					
 					<td class="header">Indicador de Status:</td>
 					<td class="cell"><?php echo htmlspecialchars( $delfor->getStatusIndic(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td> 
 					<?php } ?>
@@ -70,9 +69,27 @@
 			</table>
 			<?php $counter1=-1; $newvar1=$delfor->getLIN(); if( isset($newvar1) && ( is_array($newvar1) || $newvar1 instanceof Traversable ) && sizeof($newvar1) ) foreach( $newvar1 as $key1 => $value1 ){ $counter1++; ?>
 			<div id="item">
+				<table id="tb-delfor-data-item">
+				<tr>
+					<td colspan="4" class="header">Código do Item:</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="cell"><strong><?php echo htmlspecialchars( $value1->getPartNumber(), ENT_COMPAT, 'UTF-8', FALSE ); ?></strong></td>
+				</tr>
+				<tr>
+					<td class="header">Planta:</td>
+					<td class="cell"><?php echo htmlspecialchars( $delfor->getPlanta(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+					<td class="header">Doca:</td>
+					<td class="cell"><?php echo htmlspecialchars( $value1->getDoca(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+				</tr>
+				<tr>
+					<td class="header">Location:</td>
+					<td class="cell"><?php echo htmlspecialchars( $value1->getMaterialHandling(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+					<td class="header">Pedido:</td>
+					<td class="cell"><?php echo htmlspecialchars( $value1->getPedido(), ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+				</tr>				
+				</table>
 				<table id="tb-delfor-item">
-					<caption id="caption-item">Código do Item:</caption>
-					<caption id="caption-item-number"><?php echo htmlspecialchars( $value1->getPartNumber(), ENT_COMPAT, 'UTF-8', FALSE ); ?></caption>
 					<caption id="caption-crono">CRONOGRAMA</caption>
 					<thead>
 						<?php if( $delfor->getStrategy() === 0 ){ ?>

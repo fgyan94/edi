@@ -25,14 +25,14 @@
 			<div class="row">
 			<div class="col-md-6 col-md-offset-3 center">
 				<div class="btn-container">
-					<!--the three icons: default, ok file (img), error file (not an img)-->
+					<!--the three icons: default, ok file (txt), error file (not a txt)-->
 					<h1 class="txtupload"><i class="fa fa-file-text-o"></i></h1>
 					<h1 class="txtupload ok"><i class="fa fa-check"></i></h1>
 					<h1 class="txtupload stop"><i class="fa fa-times"></i></h1>
 					<!--this field changes dinamically displaying the filename we are trying to upload-->
 					<p id="namefile"></p>
 					<!--our custom btn which which stays under the actual one-->
-					<button type="button" id="btnup" class="btn btn-info btn-lg">Selecionar arquivo...</button>
+					<button type="button" id="btnup" class="btn btn-info btn-lg" style="cursor: pointer;">Selecionar arquivo...</button>
 					<!--this is the actual file input, is set with opacity=0 beacause we wanna see our custom one-->
 					<input type="file" value="" name="fileup" id="fileup" accept=".txt">
 				</div>
@@ -42,8 +42,9 @@
 		<div class="row">			
 			<div class="col-md-12" style="text-align: center">
 				<!--the defauld disabled btn and the actual one shown only if the three fields are valid-->
-				<input type="submit" value="Gerar Relatório" class="btn btn-success" id="submitbtn">
-				<button type="button" class="btn btn-success" disabled="disabled" id="fakebtn"><i class="fa fa-ban"></i> &nbsp; Gerar Relatório</button>
+				<!-- <input type="submit" value="Gerar Relatório" class="btn btn-success" id="submitbtn">  -->
+				<button type="submit" class="btn btn-success" id="submitbtn" disabled>Gerar Relatório</button>
+				<!-- <button type="button" class="btn btn-success" disabled="disabled" id="fakebtn"><i class="fa fa-ban"></i> &nbsp; Gerar Relatório</button>  -->
 			</div>
 		</div>			
 			
@@ -73,17 +74,24 @@ $('#fileup').change(function(){
 	    valid=[".txt"];
 	//if file is not valid we show the error icon, the red alert, and hide the submit button
 	    if (valid.indexOf(filext.toLowerCase())==-1){
+	    	
 	        $( ".txtupload" ).hide("slow");
 	        $( ".txtupload.ok" ).hide("slow");
 	        $( ".txtupload.stop" ).show("slow");
 	      
 	        $('#namefile').css({"color":"red","font-weight":700});
-	        $('#namefile').html("File "+filename+" is not  pic!");
+	        $('#namefile').html("O arquivo  "+ filename +" não é um arquivo (.txt) válido!");
 	        
-	        $( "#submitbtn" ).hide();
-	        $( "#fakebtn" ).show();
-	    }else{
-	        //if file is valid we show the green alert and show the valid submit
+	        //$( "#submitbtn" ).hide();
+	        //$( "#fakebtn" ).show();
+			
+	        $('#btnup').width(200);
+	        
+	        $('#submitbtn').prop('disabled', true);
+	    } 
+	    
+	    else {
+	    	
 	        $( ".txtupload" ).hide("slow");
 	        $( ".txtupload.stop" ).hide("slow");
 	        $( ".txtupload.ok" ).show("slow");
@@ -91,12 +99,16 @@ $('#fileup').change(function(){
 	        $('#namefile').css({"color":"green","font-weight":700});
 	        $('#namefile').html(filename);
 	      
-	        $( "#submitbtn" ).show();
-	        $( "#fakebtn" ).hide();
+	        //$( "#submitbtn" ).show();
+	        //$( "#fakebtn" ).hide();
 	        
 	        $("#btnup").removeClass('btn-info');
 	        $("#btnup").addClass('btn-warning');
 	        $("#btnup").html("Selecionar outro arquivo...");
+	        
+	        $('#btnup').width(200);
+	        
+	        $('#submitbtn').prop('disabled', false);
 	        
 	    }
 	});

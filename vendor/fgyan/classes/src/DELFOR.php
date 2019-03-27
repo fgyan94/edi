@@ -14,6 +14,7 @@ class DELFOR {
 	private $_STRATEGY = EDI::_DELFOR_STRATEGY_;
 	private $_MESSAGE;
 	protected $_SEG = array ();
+	
 	public function __construct($_FILENAME) {
 		$this->_FILE_1 = fopen ( $_FILENAME, 'r' );
 		$this->_FILE_2 = fopen ( $_FILENAME, 'r' );
@@ -90,13 +91,14 @@ class DELFOR {
 	}
 	protected function setData() {
 		$this->_SEG = array (
-				"ID_DOC_MSG" => '',
-				"FUNCTION_MSG" => '',
-				"GENERATE_DATE" => '',
-				"INI_HORIZ" => '',
-				"END_HORIZ" => '',
-				"EMITENTE" => '',
-				"PROCESS_INDIC" => '',
+				"ID_DOC_MSG" => 'Não localizado',
+				"FUNCTION_MSG" => 'Não localizado',
+				"GENERATE_DATE" => 'Não localizado',
+				"INI_HORIZ" => 'Não localizado',
+				"END_HORIZ" => 'Não localizado',
+				"EMITENTE" => 'Não localizado',
+				"PROCESS_INDIC" => 'Não localizado',
+		        "PLANTA" => 'Não localizado',
 				"LIN" => array ()
 		);
 
@@ -114,23 +116,34 @@ class DELFOR {
 
 		$this->runArray ( $this->get (), 'DTM' );
 		$this->setDocDates ( $GLOBALS ['SEG'] );
+		
+		$GLOBALS['SEG_ARRAY'] = array();
+		$this->runArray($this->get(), 'NAD', true);
+		$this->setPlanta($GLOBALS['SEG_ARRAY']);
 	}
-	protected function runArray($_ARRAY, $_WHAT) {
+	
+	protected function runArray($_ARRAY, $_WHAT, $_PUSH = false) {
 		if ($_ARRAY instanceof SEGMENT) {
 			if ($_ARRAY->getValues () ['ID'] ['ID'] == $_WHAT) {
-				$GLOBALS ['SEG'] = $_ARRAY;
+			    if($_PUSH) {
+			        array_push($GLOBALS ['SEG_ARRAY'], $_ARRAY);
+			    } else {
+				    $GLOBALS ['SEG'] = $_ARRAY;
+			    }
 			} else {
-				$this->runArray ( $_ARRAY->getSubSeg (), $_WHAT );
+			    $this->runArray ( $_ARRAY->getSubSeg (), $_WHAT, $_PUSH );
 			}
 		} else if (is_array ( $_ARRAY )) {
 			for($i = 0; $i < count ( $_ARRAY ); $i ++) {
-				$this->runArray ( $_ARRAY [$i], $_WHAT );
+			    $this->runArray ( $_ARRAY [$i], $_WHAT, $_PUSH );
 			}
 		}
 	}
+	
 	protected function setSEG($_SEG = array()) {
 		$this->_SEG = $_SEG;
 	}
+	
 	protected function setID_DOC_MSG($_UNH) {
 		$_VALUES = $_UNH->getValues ();
 		$_ID_DOC_MSG = $_VALUES ['MESSAGE_REF_NUM'] ['ID'];
@@ -143,10 +156,12 @@ class DELFOR {
 			}
 		}
 	}
+	
 	protected function setFUNCTION_MSG($_BGM) {
 		$_FUNCTION_MSG = $_BGM ['MESSAGE_FUNCTION'] ['CODE'];
 		$this->_SEG ['FUNCTION_MSG'] = $_FUNCTION_MSG;
 	}
+	
 	protected function setDocDates(DTM $_DTM) {
 		$_VALUES = $_DTM->getValues ();
 
@@ -157,19 +172,24 @@ class DELFOR {
 		else if ($_VALUES ['DTM_PERIOD'] ['QUALIFIER'] == 159)
 			$this->setEND_HORIZ ( $_DTM->convert () );
 	}
+	
 	protected function setGENERATE_DATE($_DTM) {
 		$this->_SEG ['GENERATE_DATE'] = $_DTM;
 	}
+	
 	protected function setINI_HORIZ($_DTM) {
 		$this->_SEG ['INI_HORIZ'] = $_DTM;
 	}
+	
 	protected function setEND_HORIZ($_DTM) {
 		$this->_SEG ['END_HORIZ'] = $_DTM;
 	}
+	
 	protected function setEMITENTE($_UNB) {
 		$_EMITENTE = $_UNB ['INTERCHANGE_SENDER'] ['ID'];
 		$this->_SEG ['EMITENTE'] = $_EMITENTE;
 	}
+	
 	protected function setPROCESS_INDIC($_GIS) {
 		$_VALUES = $_GIS->getValues ();
 		if (! isset ( $_VALUES ['PROCESS_IDENT'] ['ID'] )) {
@@ -190,24 +210,42 @@ class DELFOR {
 			}
 		}
 	}
+	
 	protected function pushLIN($_LIN) {
 		array_push ( $this->_SEG ["LIN"], $_LIN );
 	}
+	
+	protected function setPlanta($_NAD) {
+	    foreach ($_NAD as $key => $value) {
+            if($value instanceof NAD) {
+                if($value->getValues()['PARTY_QUALIFIER']['QUALIFIER'] == 'ST') {
+                    $this->_SEG['PLANTA'] = $value->getValues()['PARTY_IDENT']['ID'];
+                    break;
+                }
+            }
+        }
+	}
+	
 	public function getGenerateDate() {
 		return $this->_SEG ['GENERATE_DATE'];
 	}
+	
 	public function getDocID() {
 		return $this->_SEG ['ID_DOC_MSG'];
 	}
+	
 	public function getIniHoriz() {
 		return $this->_SEG ['INI_HORIZ'];
 	}
+	
 	public function getEndHoriz() {
 		return $this->_SEG ['END_HORIZ'];
 	}
+	
 	public function getMsgFunc() {
 		return $this->formatMsgFunc ();
 	}
+	
 	private function formatMsgFunc() {
 		$_RET = ( int ) $this->_SEG ['FUNCTION_MSG'];
 
@@ -232,24 +270,35 @@ class DELFOR {
 
 		return $_RET;
 	}
+	
 	public function getEmitente() {
 		return $this->_SEG ['EMITENTE'];
 	}
+	
 	public function getProcessIndic() {
 		return $this->_SEG ['PROCESS_INDIC'];
 	}
+	
 	public function getLIN() {	    
 		return $this->_SEG ['LIN'];
 	}
+	
 	protected function setStrategy($_STRATEGY = EDI::_DELFOR_STRATEGY_) {
 		$this->_STRATEGY = $_STRATEGY;
 	}
+	
 	public function getStrategy() {
 		return $this->_STRATEGY;
 	}
+	
 	public function getStrategyName() {
 		return EDI::_DELFOR_;
 	}
+	
+	public function getPlanta() {
+	    return $this->_SEG['PLANTA'];
+	}
+	
 	public function __destruct() {
 		fclose ( $this->_FILE_1 );
 		fclose ( $this->_FILE_2 );

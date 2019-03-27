@@ -11,13 +11,14 @@ class DELJIT extends DELFOR {
 	}
 	protected function setData() {
 		$_SEG = array (
-				"ID_DOC_MSG" => '',
-				"FUNCTION_MSG" => '',
-				"GENERATE_DATE" => '',
-				"INI_HORIZ" => '',
-				"END_HORIZ" => '',
-				"EMITENTE" => '',
-				"STATUS_INDIC" => '',
+				"ID_DOC_MSG" => 'Não localizado',
+				"FUNCTION_MSG" => 'Não localizado',
+				"GENERATE_DATE" => 'Não localizado',
+				"INI_HORIZ" => 'Não localizado',
+				"END_HORIZ" => 'Não localizado',
+				"EMITENTE" => 'Não localizado',
+				"STATUS_INDIC" => 'Não localizado',
+		        "PLANTA" => 'Não localizado',
 				"LIN" => array ()
 		);
 
@@ -34,6 +35,11 @@ class DELJIT extends DELFOR {
 
 		$this->runArray ( $this->get (), 'SEQ' );
 		$this->setSTATUS_INDIC ( $GLOBALS ['SEG'] );
+		
+		$GLOBALS['SEG_ARRAY'] = array();
+		$this->runArray($this->get(), 'NAD', true);
+		$this->setPlanta($GLOBALS['SEG_ARRAY']);
+		
 	}
 	private function setSTATUS_INDIC($_SEQ) {
 		$_VALUES = $_SEQ->getValues ();
@@ -67,6 +73,7 @@ class DELJIT extends DELFOR {
 			}
 		}
 	}
+	    
 	public function getStrategyName() {
 		return EDI::_DELJIT_;
 	}

@@ -58,6 +58,33 @@ img#logo-topo {
 	border-bottom: 1px solid white;
 }
 
+#tb-delfor-data-item td {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #cecece;
+	border-bottom: 1px solid white;
+}
+
+#tb-delfor-data-item {
+	margin: 5px auto;
+	margin-bottom: 25px;
+	border-spacing: 0;
+}
+
+#tb-delfor-data-item td.header {
+	color: white;
+	background-color: #888888;
+	font-weight: bold;
+	text-align: center;
+}
+
+#tb-delfor-data-item td.cell {
+	font-size: 12pt;
+	text-align: center;
+}
+
 #tb-delfor-data, #tb-delfor-item {
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
@@ -97,21 +124,6 @@ img#logo-topo {
 	background-color: #888888;
 	color: white;
 	border-bottom: 1px solid white;
-}
-
-#caption-item {
-	color: white;
-	padding: 3px;
-	background-color: #888888;
-}
-
-#caption-item-number {
-	font-size: 14pt;
-	background-color: #dddddd;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	margin-top: 5px;
-	margin-bottom: 30px;
 }
 
 #welcome h1 {
@@ -274,13 +286,22 @@ left: 50%;
 transform: translateX(-50%);
 bottom: 40px;
 height: 50px;
+padding-top: 50px;
+}
+
+#fileup[button] {
+	cursor: pointer;
+}
+
+#btnup {
+	width: 200px;
 }
 
 /*switch between input and not active input*/
 #submitbtn{
   padding:5px 50px;
-  display:none;
 }
+
 #fakebtn{
   padding:5px 40px;
 }

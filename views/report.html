@@ -50,7 +50,6 @@
 					<td class="header">Indicador de Processamento:</td>
 					<td class="cell">{$delfor->getProcessIndic()}</td> 
 					{else}
-					
 					<td class="header">Indicador de Status:</td>
 					<td class="cell">{$delfor->getStatusIndic()}</td> 
 					{/if}
@@ -70,9 +69,27 @@
 			</table>
 			{loop="$delfor->getLIN()"}
 			<div id="item">
+				<table id="tb-delfor-data-item">
+				<tr>
+					<td colspan="4" class="header">Código do Item:</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="cell"><strong>{$value1->getPartNumber()}</strong></td>
+				</tr>
+				<tr>
+					<td class="header">Planta:</td>
+					<td class="cell">{$delfor->getPlanta()}</td>
+					<td class="header">Doca:</td>
+					<td class="cell">{$value1->getDoca()}</td>
+				</tr>
+				<tr>
+					<td class="header">Location:</td>
+					<td class="cell">{$value1->getMaterialHandling()}</td>
+					<td class="header">Pedido:</td>
+					<td class="cell">{$value1->getPedido()}</td>
+				</tr>				
+				</table>
 				<table id="tb-delfor-item">
-					<caption id="caption-item">Código do Item:</caption>
-					<caption id="caption-item-number">{$value1->getPartNumber()}</caption>
 					<caption id="caption-crono">CRONOGRAMA</caption>
 					<thead>
 						{if="$delfor->getStrategy() === 0"}

@@ -4,7 +4,10 @@ namespace edi;
 
 class LIN extends SEGMENT {
 	private $_ITEM_VALUES = array (
-			"PART_NUMBER" => "",
+			"PART_NUMBER" => "Não localizado",
+	        "DOCA" => "Não localizado",
+	        "MATERIAL_HANDLING" => "Não localizado",
+	        "PEDIDO" => "Não localizado",
 			"TYPE" => array (),
 			"FREQUENCY" => array (),
 			"DATE_TIME" => array (),
@@ -131,17 +134,23 @@ class LIN extends SEGMENT {
 			parent::start ( $_INDEX, $_LINE, 'NAD', $_CLASS_IGNORE, true, 'SEG22' );
 		}
 	}
+	
 	public function startFormat() {
 		$this->setPartNumber ();
+		$this->setDoca();
+		$this->setMaterialHandling();
+		$this->setPedido();
 		$this->setType ();
 		$this->setFrequency ();
 		$this->setDateTime ();
 		$this->setQuantity ();
 		$this->setAccumulated ();
 	}
+	
 	private function setPartNumber() {
 		$this->_ITEM_VALUES ['PART_NUMBER'] = $this->getValues () ['PARTNUMBER'] ['CODE'];
 	}
+	
 	private function setType() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
@@ -154,6 +163,7 @@ class LIN extends SEGMENT {
 			}
 		}
 	}
+	
 	private function setFrequency() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
@@ -167,6 +177,7 @@ class LIN extends SEGMENT {
 			}
 		}
 	}
+	
 	private function setDateTime() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
@@ -182,6 +193,7 @@ class LIN extends SEGMENT {
 			}
 		}
 	}
+	
 	private function checkDateTime($_QTY) {
 		if ($_QTY instanceof QTY) {
 			foreach ( $_QTY->getSubSeg () as $sub_key_2 => $sub_value_2 ) {
@@ -198,6 +210,7 @@ class LIN extends SEGMENT {
 			}
 		}
 	}
+	
 	private function setQuantity() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
@@ -212,12 +225,14 @@ class LIN extends SEGMENT {
 			}
 		}
 	}
+	
 	private function checkQuantity($_QTY) {
 		if ($_QTY instanceof QTY) {
 			if ($_QTY->getValues () ['QUALIFIER'] ['ID'] == 1)
 				array_push ( $this->_ITEM_VALUES ['QUANTITY'], $_QTY->getValues () ['QUALIFIER'] ['QUANTITY'] );
 		}
 	}
+	
 	private function setAccumulated() {
 		$_TEMP_ACCUMULATED = 0;
 
@@ -235,14 +250,58 @@ class LIN extends SEGMENT {
 			array_push ( $this->_ITEM_VALUES ['ACCUMULATED'], $_TEMP_ACCUMULATED );
 		}
 	}
+	
+	private function getLOC(int $index) {
+	    foreach ($this->getSubSeg() as $key => $value) {
+	        if($value instanceof LOC) {
+	            if($value->getValues()['PLACE']['QUALIFIER'] == $index)
+	                return $value->getValues()['LOCATION']['ID'];
+	        }
+	    }
+	}
+	
+	private function setDoca() {
+	    $this->_ITEM_VALUES['DOCA'] = $this->getLOC(11);
+	}
+	
+	private function setMaterialHandling() {
+	    $this->_ITEM_VALUES['MATERIAL_HANDLING'] = $this->getLOC(159);
+	}
+	
+	private function setPedido() {
+	    foreach ($this->getSubSeg() as $key => $value) {
+	        if($value instanceof RFF) {
+	            
+	            if($value->getValues()['REF']['QUALIFIER'] == 'ON') {
+	                $this->_ITEM_VALUES['PEDIDO'] = $value->getValues()['REF']['NUMBER'];
+	                break;
+	            }
+	        }
+	    }
+	}
+	
 	public function getPartNumber() {
 		return $this->_ITEM_VALUES ['PART_NUMBER'];
 	}
+	
 	public function getLineItemValues() {
 		return $this->_ITEM_VALUES;
 	}
+	
 	public function getCount() {
 		return count ( $this->_ITEM_VALUES ['QUANTITY'] );
+	}
+	
+	public function getDoca() {
+	    return $this->_ITEM_VALUES['DOCA'];
+	}
+	
+	public function getMaterialHandling() {
+	    return $this->_ITEM_VALUES['MATERIAL_HANDLING'];
+	}
+	
+	public function getPedido() {
+	    return $this->_ITEM_VALUES['PEDIDO'];
 	}
 }
 
