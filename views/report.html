@@ -45,13 +45,13 @@
 				<tr>
 					<td class="header">Função da Mensagem:</td>
 					<td class="cell">{$delfor->getMsgFunc()}</td>
-					
+
 					{if="$delfor->getStrategy() == 0"}
 					<td class="header">Indicador de Processamento:</td>
-					<td class="cell">{$delfor->getProcessIndic()}</td> 
+					<td class="cell">{$delfor->getProcessIndic()}</td>
 					{else}
 					<td class="header">Indicador de Status:</td>
-					<td class="cell">{$delfor->getStatusIndic()}</td> 
+					<td class="cell">{$delfor->getStatusIndic()}</td>
 					{/if}
 				</tr>
 				<tr>
@@ -87,7 +87,13 @@
 					<td class="cell">{$value1->getMaterialHandling()}</td>
 					<td class="header">Pedido:</td>
 					<td class="cell">{$value1->getPedido()}</td>
-				</tr>				
+				</tr>
+				<tr>
+					<td class="header">Quantidade Última Entrega:</td>
+					<td class="cell">{$value1->getQtyUE()}</td>
+					<td class="header">Data Última Entrega:</td>
+					<td class="cell">{$value1->getDataUE()}</td>
+				</tr>
 				</table>
 				<table id="tb-delfor-item">
 					<caption id="caption-crono">CRONOGRAMA</caption>
@@ -99,6 +105,7 @@
 							<td>DATA</td>
 							<td>QUANTIDADE</td>
 							<td>QTDE ACUMULADA</td>
+							<td>REF</td>
 						</tr>
 						{else}
 						<tr>
@@ -120,6 +127,7 @@
 							
 							{if="$delfor->getStrategy() === 0"}
 								<td>{$value1->getLineItemValues().ACCUMULATED.$counter2}</td>
+								<td>{$delfor->getPlanta()}{$value1->getPartNumber()}{$value1->getLineItemValues().DATE_TIME.$counter2}</td>
 							{/if}
 						</tr>
 						{/loop}

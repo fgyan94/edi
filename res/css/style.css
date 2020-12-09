@@ -4,7 +4,7 @@
 
 body#index, body#report {
 	dislpay: block;
-	width: 800px;
+	width: 1000px;
 	margin: 0px auto;
 	padding: 10px;
 	font-family: 'Times New Roman', sans-serif;
@@ -95,6 +95,7 @@ img#logo-topo {
 
 #tb-delfor-data {
 	box-shadow: 0 0 20px #AAA;
+	margin: 0 auto;
 }
 
 #item {

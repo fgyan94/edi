@@ -8,6 +8,8 @@ class LIN extends SEGMENT {
 	        "DOCA" => "Não localizado",
 	        "MATERIAL_HANDLING" => "Não localizado",
 	        "PEDIDO" => "Não localizado",
+			"QTY_ULTIMA_ENTREGA" => 0,
+            "DATA_ULTIMA_ENTREGA" => "Não localizado",
 			"TYPE" => array (),
 			"FREQUENCY" => array (),
 			"DATE_TIME" => array (),
@@ -43,6 +45,7 @@ class LIN extends SEGMENT {
 			array_unshift ( $_CLASS_IGNORE, 'RFF' );
 			array_unshift ( $_CLASS_IGNORE, 'PAC' );
 			array_unshift ( $_CLASS_IGNORE, 'FTX' );
+            array_unshift ( $_CLASS_IGNORE, 'DTM' );
 			array_unshift ( $_CLASS_IGNORE, 'GIR' );
 			array_unshift ( $_CLASS_IGNORE, 'ALI' );
 			array_unshift ( $_CLASS_IGNORE, 'IMD' );
@@ -57,6 +60,9 @@ class LIN extends SEGMENT {
 
 			array_shift ( $_CLASS_IGNORE );
 			parent::start ( $_INDEX, $_LINE, 'GIR', $_CLASS_IGNORE, false );
+
+            array_shift ( $_CLASS_IGNORE );
+            parent::start ( $_INDEX, $_LINE, 'DTM', $_CLASS_IGNORE, false );
 
 			array_shift ( $_CLASS_IGNORE );
 			parent::start ( $_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false );
@@ -110,7 +116,7 @@ class LIN extends SEGMENT {
 			parent::start ( $_INDEX, $_LINE, 'LOC', $_CLASS_IGNORE, false );
 
 			array_shift ( $_CLASS_IGNORE );
-			parent::start ( $_INDEX, $_LINE, 'DMT', $_CLASS_IGNORE, false );
+			parent::start ( $_INDEX, $_LINE, 'DTM', $_CLASS_IGNORE, false );
 
 			array_shift ( $_CLASS_IGNORE );
 			parent::start ( $_INDEX, $_LINE, 'FTX', $_CLASS_IGNORE, false );
@@ -145,6 +151,8 @@ class LIN extends SEGMENT {
 		$this->setDateTime ();
 		$this->setQuantity ();
 		$this->setAccumulated ();
+		$this->setQtyUE();
+        $this->setDataUE();
 	}
 	
 	private function setPartNumber() {
@@ -154,7 +162,7 @@ class LIN extends SEGMENT {
 	private function setType() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
-				if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4) {
+			    if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4 || $value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 1) {
 
 					for($i = 0; $i < count ( $value->getSubSeg () ); $i ++) {
 						array_push ( $this->_ITEM_VALUES ['TYPE'], $value->getValues () ['STATUS_INDIC'] ['NUMBER'] );
@@ -167,7 +175,7 @@ class LIN extends SEGMENT {
 	private function setFrequency() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
-				if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4) {
+			    if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4 || $value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 1) {
 
 					for($i = 0; $i < count ( $value->getSubSeg () ); $i ++) {
 						if (isset ( $value->getValues () ['PATTERN_DESCR'] ['FREQUENCY'] ))
@@ -181,7 +189,7 @@ class LIN extends SEGMENT {
 	private function setDateTime() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
-				if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4) {
+			    if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4 || $value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 1) {
 
 					foreach ( $value->getSubSeg () as $sub_key => $sub_value ) {
 						$this->checkDateTime ( $sub_value );
@@ -214,7 +222,7 @@ class LIN extends SEGMENT {
 	private function setQuantity() {
 		foreach ( $this->getSubSeg () as $key => $value ) {
 			if ($value instanceof SCC) {
-				if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4) {
+			    if ($value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 4 || $value->getValues () ['STATUS_INDIC'] ['NUMBER'] == 1) {
 
 					foreach ( $value->getSubSeg () as $sub_key => $sub_value ) {
 						$this->checkQuantity ( $sub_value );
@@ -236,20 +244,64 @@ class LIN extends SEGMENT {
 	private function setAccumulated() {
 		$_TEMP_ACCUMULATED = 0;
 
-		foreach ( $this->getSubSeg () as $key => $value ) {
-			if ($value instanceof QTY) {
-				if ($value->getValues () ['QUALIFIER'] ['ID'] == 79) {
-					$_TEMP_ACCUMULATED = $value->getValues () ['QUALIFIER'] ['QUANTITY'];
-					break;
-				}
-			}
-		}
+		// Solicitação feita por Maurício - 19/06
+
+//		foreach ( $this->getSubSeg () as $key => $value ) {
+//			if ($value instanceof QTY) {
+//				if ($value->getValues () ['QUALIFIER'] ['ID'] == 79) {
+//					$_TEMP_ACCUMULATED = $value->getValues () ['QUALIFIER'] ['QUANTITY'];
+//					break;
+//				}
+//			}
+//		}
 
 		for($i = 0; $i < count ( $this->_ITEM_VALUES ['QUANTITY'] ); $i ++) {
 			$_TEMP_ACCUMULATED += $this->_ITEM_VALUES ['QUANTITY'] [$i];
 			array_push ( $this->_ITEM_VALUES ['ACCUMULATED'], $_TEMP_ACCUMULATED );
 		}
 	}
+
+	private function setQtyUE() {
+		foreach ( $this->getSubSeg () as $key => $value ) {
+			if ($value instanceof QTY) {
+				if ($value->getValues () ['QUALIFIER'] ['ID'] == 3) {
+					$this->_ITEM_VALUES['QTY_ULTIMA_ENTREGA'] = $value->getValues () ['QUALIFIER'] ['QUANTITY'];
+					break;
+				}
+			}
+		}
+    }
+
+    private function setDataUE() {
+
+	    foreach ( $this->getSubSeg () as $key => $value ) {
+            if ($value instanceof QTY) {
+                if ($value->getValues () ['QUALIFIER'] ['ID'] == 3) {
+                   $_DTM = $value->getSubSeg();
+
+                   if($this->getDate($_DTM))
+                       break;
+                }
+            }
+        }
+    }
+
+    private function getDate($_DTM) {
+        foreach ($_DTM as $sub_key => $sub_value) {
+            if($sub_value instanceof DTM) {
+                if($sub_value->getValues()['DTM_PERIOD']['QUALIFIER'] == 11){
+
+                    $timestamp = strtotime ( $sub_value->getValues () ['DTM_PERIOD'] ['DATE_TIME'] );
+                    $date = date ( 'd/m/Y', $timestamp );
+
+                    $this->_ITEM_VALUES['DATA_ULTIMA_ENTREGA'] = $date;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 	
 	private function getLOC(int $index) {
 	    foreach ($this->getSubSeg() as $key => $value) {
@@ -303,6 +355,14 @@ class LIN extends SEGMENT {
 	public function getPedido() {
 	    return $this->_ITEM_VALUES['PEDIDO'];
 	}
+
+	public function getQtyUE() {
+	    return $this->_ITEM_VALUES['QTY_ULTIMA_ENTREGA'];
+    }
+
+    public function getDataUE() {
+	    return $this->_ITEM_VALUES['DATA_ULTIMA_ENTREGA'];
+    }
 }
 
 ?>

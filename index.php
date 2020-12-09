@@ -1,6 +1,6 @@
 <?php
-// error_reporting ( 0 );
-// ini_set ( “display_errors”, 0 );
+error_reporting ( 0 );
+ini_set ( “display_errors”, 0 );
 
 session_start();
 
@@ -62,7 +62,7 @@ $app->get ( '/export', function () {
 } );
 
 $app->post ( '/report', function () {
-	if (pathinfo ( $_FILES ['fileup'] ['name'], PATHINFO_EXTENSION ) !== 'txt') {
+    if (strtoupper(pathinfo ( $_FILES ['fileup'] ['name'], PATHINFO_EXTENSION )) !== strtoupper('txt')) {
 		echo "<script>
                     alert('Arquivo inválido! Apenas arquivos texto (.TXT) são permitidos');
                     window.location = '/';
